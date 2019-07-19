@@ -1,0 +1,27 @@
+{
+    "name": "dontdrinkandroot/bootstrap-bundle",
+    "description": "Symfony integrations for Bootstrap",
+    "type": "symfony-bundle",
+    "license": "Apache-2.0",
+    "authors": [
+        {
+            "name": "Philip Washington Sorst",
+            "email": "philip@sorst.net",
+            "homepage": "https://sorst.net"
+        }
+    ],
+    "minimum-stability": "stable",
+    "autoload": {
+        "psr-4": {
+            "Dontdrinkandroot\\BootstrapBundle\\": ""
+        }
+    },
+    "require": {
+        "php": ">=7.2",
+        "symfony/config": "^4.0",
+        "symfony/dependency-injection": "^4.0"
+    },
+    "suggest": {
+        "knplabs/knp-menu-bundle": "For menu integration"
+    }
+}
