@@ -2,6 +2,7 @@
 
 namespace Dontdrinkandroot\BootstrapBundle\DependencyInjection;
 
+use Knp\Bundle\MenuBundle\KnpMenuBundle;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
@@ -22,5 +23,10 @@ class DdrBootstrapExtension extends Extension
 
         $loader = new YamlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
         $loader->load('services.yaml');
+
+        $bundles = $container->getParameter('kernel.bundles');
+        if (in_array(KnpMenuBundle::class, $bundles)) {
+            $loader->load('services_knp_menu.yaml');
+        }
     }
 }
