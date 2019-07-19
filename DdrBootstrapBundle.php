@@ -1,6 +1,6 @@
 <?php
 
-namespace Dontdrinkandroot\ApiPlatformBundle;
+namespace Dontdrinkandroot\BootstrapBundle;
 
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 

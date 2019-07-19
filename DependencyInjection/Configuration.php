@@ -1,6 +1,6 @@
 <?php
 
-namespace Dontdrinkandroot\ApiPlatformBundle\DependencyInjection;
+namespace Dontdrinkandroot\BootstrapBundle\DependencyInjection;
 
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
