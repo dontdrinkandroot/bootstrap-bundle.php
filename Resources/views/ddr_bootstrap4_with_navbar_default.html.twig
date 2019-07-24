@@ -32,15 +32,22 @@
         {% endblock navbar %}
 
         {% set breadcrumb_content_block = block('ddr_breadcrumb_content') %}
-        {% if breadcrumb_content_block|trim is not empty %}
+        {% set ddr_subnav_actions_content_block = block('ddr_subnav_actions_content') %}
+        {% if breadcrumb_content_block|trim is not empty or ddr_subnav_actions_content_block is not empty %}
             {% block ddr_subnav %}
                 <nav class="ddr-subnav">
                     {% block ddr_subnav_content %}
-                        <div class="container">
-                            <ol class="breadcrumb">
-                                {% block ddr_breadcrumb_content %}
-                                {% endblock ddr_breadcrumb_content %}
-                            </ol>
+                        <div class="container ddr-action-container">
+                            <div class="ddr-content">
+                                <ol class="breadcrumb">
+                                    {% block ddr_breadcrumb_content %}
+                                    {% endblock ddr_breadcrumb_content %}
+                                </ol>
+                            </div>
+                            <div class="ddr-actions">
+                                {% block ddr_subnav_actions_content %}
+                                {% endblock ddr_subnav_actions_content %}
+                            </div>
                         </div>
                     {% endblock ddr_subnav_content %}
                 </nav>
