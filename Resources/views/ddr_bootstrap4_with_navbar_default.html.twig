@@ -33,7 +33,8 @@
 
         {% set breadcrumb_content_block = block('ddr_breadcrumb_content') %}
         {% set ddr_subnav_actions_content_block = block('ddr_subnav_actions_content') %}
-        {% if breadcrumb_content_block|trim is not empty or ddr_subnav_actions_content_block is not empty %}
+
+        {% if breadcrumb_content_block|trim is not empty or ddr_subnav_actions_content_block|trim is not empty %}
             {% block ddr_subnav %}
                 <nav class="ddr-subnav">
                     {% block ddr_subnav_content %}
