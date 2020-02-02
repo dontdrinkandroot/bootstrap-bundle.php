@@ -57,7 +57,7 @@ class PaginatorPaginationExtension extends AbstractExtension
         $html .= $this->renderLink($page - 1, '&laquo;', $route, $params, $cssClasses, 'prev');
 
         $surroundingStartIdx = max(1, $page - 2);
-        $surroundingEndIdx = min($total, $page + 2);
+        $surroundingEndIdx = min($totalPages, $page + 2);
 
         /* Render first page */
         if ($surroundingStartIdx > 1) {
@@ -92,7 +92,7 @@ class PaginatorPaginationExtension extends AbstractExtension
         }
 
         /* Render next page */
-        $cssClasses = array();
+        $cssClasses = [];
         if ($page >= $totalPages) {
             $cssClasses[] = 'disabled';
         }
