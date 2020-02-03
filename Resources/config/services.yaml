@@ -1,0 +1,5 @@
+services:
+    Dontdrinkandroot\BootstrapBundle\Pagination\CountablePaginationExtension:
+        autowire: true
+        public: false
+        tags: ['twig.extension']

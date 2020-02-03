@@ -29,8 +29,5 @@ class DdrBootstrapExtension extends Extension
         if (in_array(KnpMenuBundle::class, $bundles)) {
             $loader->load('services_knp_menu.yaml');
         }
-        if (in_array(DoctrineBundle::class, $bundles)) {
-            $loader->load('services_doctrine.yaml');
-        }
     }
 }

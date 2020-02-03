@@ -2,13 +2,14 @@
 
 namespace Dontdrinkandroot\BootstrapBundle\Pagination;
 
+use Countable;
 use Doctrine\ORM\Tools\Pagination\Paginator;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;
 
-class PaginatorPaginationExtension extends AbstractExtension
+class CountablePaginationExtension extends AbstractExtension
 {
     /** @var UrlGeneratorInterface */
     private $generator;
@@ -29,6 +30,11 @@ class PaginatorPaginationExtension extends AbstractExtension
     {
         return [
             new TwigFunction(
+                'ddr_bs_countable_pagination',
+                [$this, 'generatePagination'],
+                ['is_safe' => ['html']]
+            ),
+            new TwigFunction(
                 'ddr_bs_paginator_pagination',
                 [$this, 'generatePagination'],
                 ['is_safe' => ['html']]
@@ -36,12 +42,12 @@ class PaginatorPaginationExtension extends AbstractExtension
         ];
     }
 
-    public function generatePagination(Paginator $paginator, int $page, int $perPage): string
+    public function generatePagination(Countable $countable, int $page, int $perPage): string
     {
         $request = $this->requestStack->getCurrentRequest();
         $route = $request->attributes->get('_route');
 
-        $total = $paginator->count();
+        $total = $countable->count();
         $totalPages = $this->getTotalPages($total, $perPage);
 
         $params = array_merge($request->attributes->get('_route_params'), $request->query->all());

@@ -1,6 +1,0 @@
-services:
-
-    Dontdrinkandroot\BootstrapBundle\Pagination\PaginatorPaginationExtension:
-        autowire: true
-        public: false
-        tags: ['twig.extension']
