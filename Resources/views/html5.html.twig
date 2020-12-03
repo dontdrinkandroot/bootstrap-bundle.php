@@ -11,7 +11,7 @@
         {% block head_stylesheet %}
         {% endblock head_stylesheet %}
     </head>
-    <body>
+    <body class="{% block body_class %}{% endblock body_class %}">
     {% block body %}
     {% endblock body %}
     {% block footer %}
