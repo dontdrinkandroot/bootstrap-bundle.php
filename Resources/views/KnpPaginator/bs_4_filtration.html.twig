@@ -1,0 +1,20 @@
+<form method="get" action="{{ action }}" enctype="application/x-www-form-urlencoded" class="mb-3">
+
+    <div class="input-group">
+        {% if fields|length > 1 %}
+            <select name="{{ filterFieldName }}" class="custom-select">
+                {% for field, label in fields %}
+                    <option value="{{ field }}"{% if selectedField == field %} selected="selected"{% endif %}>{{ label }}</option>
+                {% endfor %}
+            </select>
+        {% else %}
+            <input type="text" readonly="readonly" name="{{ filterFieldName }}" value="{{ fields|keys|first }}" class="form-control" />
+        {% endif %}
+
+        <input type="text" value="{{ selectedValue }}" name="{{ filterValueName }}" class="form-control" />
+
+        <div class="input-group-append">
+            <button class="btn btn-outline-secondary">{{ options.button }}</button>
+        </div>
+    </div>
+</form>
