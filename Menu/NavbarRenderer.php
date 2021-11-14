@@ -7,26 +7,12 @@ use Knp\Menu\Matcher\MatcherInterface;
 use Knp\Menu\Renderer\Renderer;
 use Knp\Menu\Renderer\RendererInterface;
 
-/**
- * @author Philip Washington Sorst <philip@sorst.net>
- */
 class NavbarRenderer extends Renderer implements RendererInterface
 {
-    /**
-     * @var MatcherInterface
-     */
-    private $matcher;
+    private MatcherInterface $matcher;
 
-    /**
-     * @var
-     */
-    public $defaultOptions;
+    public array $defaultOptions;
 
-    /**
-     * @param MatcherInterface $matcher
-     * @param array            $defaultOptions
-     * @param string           $charset
-     */
     public function __construct(MatcherInterface $matcher, array $defaultOptions = [], $charset = null)
     {
         $this->matcher = $matcher;
@@ -80,14 +66,14 @@ class NavbarRenderer extends Renderer implements RendererInterface
         $toggleAttributes = $item->getLinkAttributes();
         $toggleAttributes['class'] = implode(' ', $toggleClasses);
         $toggleAttributes['href'] = '#';
-        $toggleAttributes['data-toggle'] = 'dropdown';
+        $toggleAttributes['data-bs-toggle'] = 'dropdown';
         $toggleAttributes['aria-haspopup'] = 'true';
         $toggleAttributes['aria-expanded'] = 'false';
 
         $dropdownMenuAttributes = [];
-        if (null !== $align = $item->getExtra('align_right')) {
+        if (null !== $align = $item->getExtra('align_end')) {
             if (true === $align) {
-                $dropdownMenuClasses[] = 'dropdown-menu-right';
+                $dropdownMenuClasses[] = 'dropdown-menu-end';
             }
         }
         $dropdownMenuAttributes['class'] = implode(' ', $dropdownMenuClasses);
@@ -161,11 +147,6 @@ class NavbarRenderer extends Renderer implements RendererInterface
         return $html;
     }
 
-    /**
-     * @param ItemInterface $item
-     *
-     * @return string
-     */
     private function getLabel(ItemInterface $item): string
     {
         $label = $item->getLabel();
