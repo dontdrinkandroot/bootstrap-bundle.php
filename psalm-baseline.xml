@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<files psalm-version="4.x-dev@">
+    <file src="DdrBootstrapBundle.php">
+        <UndefinedClass occurrences="1">
+            <code>Bundle</code>
+        </UndefinedClass>
+    </file>
+    <file src="DependencyInjection/DdrBootstrapExtension.php">
+        <UndefinedClass occurrences="1">
+            <code>Extension</code>
+        </UndefinedClass>
+    </file>
+    <file src="Menu/NavbarMenuBuilder.php">
+        <UndefinedClass occurrences="4">
+            <code>FactoryInterface</code>
+            <code>FactoryInterface</code>
+            <code>ItemInterface</code>
+            <code>ItemInterface</code>
+        </UndefinedClass>
+        <UndefinedDocblockClass occurrences="1">
+            <code>FactoryInterface</code>
+        </UndefinedDocblockClass>
+    </file>
+    <file src="Menu/NavbarRenderer.php">
+        <UndefinedClass occurrences="2">
+            <code>Renderer</code>
+            <code>RendererInterface</code>
+        </UndefinedClass>
+    </file>
+    <file src="Pagination/CountablePaginationExtension.php">
+        <UndefinedClass occurrences="1">
+            <code>AbstractExtension</code>
+        </UndefinedClass>
+    </file>
+</files>
