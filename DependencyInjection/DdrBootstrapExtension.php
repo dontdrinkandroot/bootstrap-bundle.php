@@ -22,7 +22,7 @@ class DdrBootstrapExtension extends Extension implements PrependExtensionInterfa
     public function prepend(ContainerBuilder $container)
     {
         $bundles = $container->getParameter('kernel.bundles');
-        if (in_array(KnpPaginatorBundle::class, $bundles)) {
+        if (in_array(KnpPaginatorBundle::class, $bundles, true)) {
             $container->prependExtensionConfig(
                 'knp_paginator',
                 [

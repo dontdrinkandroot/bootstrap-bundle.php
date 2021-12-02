@@ -1,9 +1,9 @@
 services:
 
-    Dontdrinkandroot\BootstrapBundle\Menu\NavbarRenderer:
+    Dontdrinkandroot\BootstrapBundle\Menu\Bs5NavbarRenderer:
         arguments:
             - '@knp_menu.matcher'
             - "%knp_menu.renderer.list.options%"
             - "%kernel.charset%"
         tags:
-            - { name: knp_menu.renderer, alias: ddr_bs_navbar }
+            - { name: knp_menu.renderer, alias: ddr_navbar_bs5 }

@@ -7,8 +7,11 @@ use Knp\Menu\Matcher\MatcherInterface;
 use Knp\Menu\Renderer\Renderer;
 use Knp\Menu\Renderer\RendererInterface;
 
-class NavbarRenderer extends Renderer implements RendererInterface
+class Bs5NavbarRenderer extends Renderer implements RendererInterface
 {
+    public const ALIGN_END = 'align_end';
+    const DROPDOWN = 'dropdown';
+
     private MatcherInterface $matcher;
 
     public array $defaultOptions;
@@ -47,7 +50,7 @@ class NavbarRenderer extends Renderer implements RendererInterface
 
     private function renderItem(ItemInterface $item, array $options = []): string
     {
-        if (true === $item->getExtra('dropdown')) {
+        if (true === $item->getExtra(self::DROPDOWN)) {
             return $this->renderDropdown($item, $options);
         } else {
             return $this->renderLinkItem($item, $options);
@@ -71,7 +74,7 @@ class NavbarRenderer extends Renderer implements RendererInterface
         $toggleAttributes['aria-expanded'] = 'false';
 
         $dropdownMenuAttributes = [];
-        if (null !== $align = $item->getExtra('align_end')) {
+        if (null !== $align = $item->getExtra(self::ALIGN_END)) {
             if (true === $align) {
                 $dropdownMenuClasses[] = 'dropdown-menu-end';
             }
