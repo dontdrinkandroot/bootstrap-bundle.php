@@ -14,12 +14,18 @@
     "autoload": {
         "psr-4": {
             "Dontdrinkandroot\\BootstrapBundle\\": ""
-        }
+        },
+        "exclude-from-classmap": [
+            "/Tests/"
+        ]
     },
     "require": {
-        "php": ">=7.2",
-        "symfony/config": "^4.0",
-        "symfony/dependency-injection": "^4.0"
+        "php": "^7.4|^8.0",
+        "symfony/config": "^4.4|^5.4",
+        "symfony/dependency-injection": "^4.4|^5.4"
+    },
+    "require-dev": {
+        "knplabs/knp-menu-bundle": "^3.2"
     },
     "suggest": {
         "knplabs/knp-menu-bundle": "For menu integration"
