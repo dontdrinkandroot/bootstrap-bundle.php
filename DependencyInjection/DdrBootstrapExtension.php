@@ -27,9 +27,9 @@ class DdrBootstrapExtension extends Extension implements PrependExtensionInterfa
                 'knp_paginator',
                 [
                     'template' => [
-                        'pagination' => '@KnpPaginator/Pagination/twitter_bootstrap_v4_pagination.html.twig',
-                        'sortable'   => '@DdrBootstrap/KnpPaginator/bs_4_sortable.html.twig',
-                        'filtration' => '@DdrBootstrap/KnpPaginator/bs_4_filtration.html.twig'
+                        'pagination' => '@KnpPaginator/Pagination/bootstrap_v5_pagination.html.twig',
+                        'sortable'   => '@KnpPaginator/Pagination/bootstrap_v5_fa_sortable_link.html.twig',
+                        'filtration' => '@KnpPaginator/Pagination/bootstrap_v5_filtration.html.twig'
                     ]
                 ]
             );
