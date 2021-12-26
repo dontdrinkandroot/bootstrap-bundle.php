@@ -2,7 +2,6 @@
 
 namespace Dontdrinkandroot\BootstrapBundle\DependencyInjection;
 
-use Doctrine\Bundle\DoctrineBundle\DoctrineBundle;
 use Knp\Bundle\MenuBundle\KnpMenuBundle;
 use Knp\Bundle\PaginatorBundle\KnpPaginatorBundle;
 use Symfony\Component\Config\FileLocator;
@@ -11,9 +10,6 @@ use Symfony\Component\DependencyInjection\Extension\PrependExtensionInterface;
 use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 
-/**
- * @author Philip Washington Sorst <philip@sorst.net>
- */
 class DdrBootstrapExtension extends Extension implements PrependExtensionInterface
 {
     /**
