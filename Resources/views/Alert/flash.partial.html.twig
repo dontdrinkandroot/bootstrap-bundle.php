@@ -1,20 +1,18 @@
-{% if app.request.hasPreviousSession %}
-    {% for type, messages in app.flashes() %}
-        {% set alertType = type %}
-        {% if type not in ['alert-success', 'alert-warning', 'alert-danger', 'alert-info'] %}
-            {% if type == 'success' %}
-                {% set alertType = 'alert-success' %}
-            {% elseif type == 'error' %}
-                {% set alertType = 'alert-danger' %}
-            {% else %}
-                {% set alertType = 'alert-info' %}
-            {% endif %}
+{% for type, messages in app.flashes() %}
+    {% set alertType = type %}
+    {% if type not in ['alert-success', 'alert-warning', 'alert-danger', 'alert-info'] %}
+        {% if type == 'success' %}
+            {% set alertType = 'alert-success' %}
+        {% elseif type == 'error' %}
+            {% set alertType = 'alert-danger' %}
+        {% else %}
+            {% set alertType = 'alert-info' %}
         {% endif %}
+    {% endif %}
 
-        {% for message in messages %}
-            <div class="alert {{ alertType }}">
-                {{ message }}
-            </div>
-        {% endfor %}
+    {% for message in messages %}
+        <div class="alert {{ alertType }}">
+            {{ message }}
+        </div>
     {% endfor %}
-{% endif %}
+{% endfor %}

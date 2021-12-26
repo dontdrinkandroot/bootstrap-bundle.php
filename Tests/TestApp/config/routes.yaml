@@ -1,0 +1,3 @@
+test_app.alerts:
+    path: '/alerts'
+    controller: 'Dontdrinkandroot\BootstrapBundle\Tests\TestApp\Controller\AlertAction'
