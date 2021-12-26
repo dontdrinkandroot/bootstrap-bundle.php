@@ -9,6 +9,7 @@ jobs:
         env:
             fail-fast: false
             SYMFONY_REQUIRE: ${{matrix.symfony-require}}
+            SYMFONY_DEPRECATIONS_HELPER: ${{matrix.symfony-deprecations-helper}}
         strategy:
             matrix:
                 include:
