@@ -11,13 +11,15 @@ jobs:
             SYMFONY_REQUIRE: ${{matrix.symfony-require}}
         strategy:
             matrix:
-                php-version:
-                    - "8.1"
-                symfony-require:
-                    - "5.4.*"
-                deps:
-                    - "highest"
-                    - "lowest"
+                include:
+                    -   php-version: "8.1"
+                        symfony-require: "5.4.*"
+                        deps: "lowest"
+                        symfony-deprecations-helper: "disabled=1"
+                    -   php-version: "8.1"
+                        symfony-require: "5.4.*"
+                        deps: "highest"
+                        symfony-deprecations-helper: "max[direct]=0"
 
         steps:
             -   name: "Checkout"
