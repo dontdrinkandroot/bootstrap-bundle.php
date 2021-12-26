@@ -3,7 +3,7 @@
 namespace Dontdrinkandroot\BootstrapBundle\Pagination;
 
 use Countable;
-use Doctrine\ORM\Tools\Pagination\Paginator;
+use Dontdrinkandroot\Common\Asserted;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Twig\Extension\AbstractExtension;
@@ -11,22 +11,14 @@ use Twig\TwigFunction;
 
 class CountablePaginationExtension extends AbstractExtension
 {
-    /** @var UrlGeneratorInterface */
-    private $generator;
-
-    /** @var RequestStack  */
-    private $requestStack;
-
-    public function __construct(UrlGeneratorInterface $generator, RequestStack $requestStack)
+    public function __construct(private UrlGeneratorInterface $generator, private RequestStack $requestStack)
     {
-        $this->generator = $generator;
-        $this->requestStack = $requestStack;
     }
 
     /**
      * {@inheritdoc}
      */
-    public function getFunctions()
+    public function getFunctions(): array
     {
         return [
             new TwigFunction(
@@ -44,7 +36,7 @@ class CountablePaginationExtension extends AbstractExtension
 
     public function generatePagination(Countable $countable, int $page, int $perPage): string
     {
-        $request = $this->requestStack->getCurrentRequest();
+        $request = Asserted::notNull($this->requestStack->getCurrentRequest());
         $route = $request->attributes->get('_route');
 
         $total = $countable->count();
@@ -67,7 +59,7 @@ class CountablePaginationExtension extends AbstractExtension
 
         /* Render first page */
         if ($surroundingStartIdx > 1) {
-            $html .= $this->renderLink(1, 1, $route, $params);
+            $html .= $this->renderLink(1, '1', $route, $params);
         }
 
         /* Render dots */
@@ -83,7 +75,7 @@ class CountablePaginationExtension extends AbstractExtension
                 if ($i === $page) {
                     $cssClasses[] = 'active';
                 }
-                $html .= $this->renderLink($i, $i, $route, $params, $cssClasses);
+                $html .= $this->renderLink($i, (string)$i, $route, $params, $cssClasses);
             }
         }
 
@@ -94,7 +86,7 @@ class CountablePaginationExtension extends AbstractExtension
 
         /* Render last page */
         if ($surroundingEndIdx < $totalPages) {
-            $html .= $this->renderLink($totalPages, $totalPages, $route, $params);
+            $html .= $this->renderLink($totalPages, (string)$totalPages, $route, $params);
         }
 
         /* Render next page */

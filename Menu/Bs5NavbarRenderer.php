@@ -12,15 +12,8 @@ class Bs5NavbarRenderer extends Renderer implements RendererInterface
     public const ALIGN_END = 'align_end';
     const DROPDOWN = 'dropdown';
 
-    private MatcherInterface $matcher;
-
-    public array $defaultOptions;
-
-    public function __construct(MatcherInterface $matcher, array $defaultOptions = [], $charset = null)
+    public function __construct(private MatcherInterface $matcher, public array $defaultOptions = [], $charset = null)
     {
-        $this->matcher = $matcher;
-        $this->defaultOptions = $defaultOptions;
-
         parent::__construct($charset);
     }
 
@@ -153,9 +146,6 @@ class Bs5NavbarRenderer extends Renderer implements RendererInterface
     private function getLabel(ItemInterface $item): string
     {
         $label = $item->getLabel();
-        if (null === $label) {
-            $label = $item->getName();
-        }
 
         return $this->escape($label);
     }

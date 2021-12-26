@@ -21,6 +21,7 @@
     },
     "require": {
         "php": "^8.1",
+        "dontdrinkandroot/common": "dev-master",
         "symfony/config": "^5.4",
         "symfony/dependency-injection": "^5.4"
     },
@@ -31,7 +32,9 @@
         "symfony/css-selector": "^5.4",
         "symfony/phpunit-bridge": "^5.4",
         "symfony/twig-bundle": "^5.4",
-        "symfony/yaml": "^5.4"
+        "symfony/yaml": "^5.4",
+        "doctrine/orm": "^2.10",
+        "knplabs/knp-paginator-bundle": "^5.8"
     },
     "suggest": {
         "knplabs/knp-menu-bundle": "For menu integration"
