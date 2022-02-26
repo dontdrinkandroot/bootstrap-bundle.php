@@ -4,6 +4,7 @@ namespace Dontdrinkandroot\BootstrapBundle\DependencyInjection;
 
 use Knp\Bundle\MenuBundle\KnpMenuBundle;
 use Knp\Bundle\PaginatorBundle\KnpPaginatorBundle;
+use Symfony\Bundle\TwigBundle\TwigBundle;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Extension\PrependExtensionInterface;
@@ -15,9 +16,16 @@ class DdrBootstrapExtension extends Extension implements PrependExtensionInterfa
     /**
      * {@inheritdoc}
      */
-    public function prepend(ContainerBuilder $container)
+    public function prepend(ContainerBuilder $container): void
     {
         $bundles = $container->getParameter('kernel.bundles');
+
+        if (in_array(TwigBundle::class, $bundles, true)) {
+            $container->prependExtensionConfig('twig', [
+                'form_themes' => ['@DdrBootstrap/Form/bootstrap_5_horizontal_layout.html.twig']
+            ]);
+        }
+
         if (in_array(KnpPaginatorBundle::class, $bundles, true)) {
             $container->prependExtensionConfig(
                 'knp_paginator',
@@ -35,7 +43,7 @@ class DdrBootstrapExtension extends Extension implements PrependExtensionInterfa
     /**
      * {@inheritdoc}
      */
-    public function load(array $configs, ContainerBuilder $container)
+    public function load(array $configs, ContainerBuilder $container): void
     {
         $configuration = new Configuration();
         $config = $this->processConfiguration($configuration, $configs);
