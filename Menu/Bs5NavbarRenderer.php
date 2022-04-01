@@ -12,8 +12,11 @@ class Bs5NavbarRenderer extends Renderer implements RendererInterface
     public const ALIGN_END = 'align_end';
     const DROPDOWN = 'dropdown';
 
-    public function __construct(private MatcherInterface $matcher, public array $defaultOptions = [], $charset = null)
-    {
+    public function __construct(
+        private MatcherInterface $matcher,
+        public array $defaultOptions = [],
+        ?string $charset = null
+    ) {
         parent::__construct($charset);
     }
 
@@ -45,9 +48,9 @@ class Bs5NavbarRenderer extends Renderer implements RendererInterface
     {
         if (true === $item->getExtra(self::DROPDOWN)) {
             return $this->renderDropdown($item, $options);
-        } else {
-            return $this->renderLinkItem($item, $options);
         }
+
+        return $this->renderLinkItem($item, $options);
     }
 
     private function renderDropdown(ItemInterface $item, array $options = []): string
@@ -67,10 +70,8 @@ class Bs5NavbarRenderer extends Renderer implements RendererInterface
         $toggleAttributes['aria-expanded'] = 'false';
 
         $dropdownMenuAttributes = [];
-        if (null !== $align = $item->getExtra(self::ALIGN_END)) {
-            if (true === $align) {
-                $dropdownMenuClasses[] = 'dropdown-menu-end';
-            }
+        if ((null !== $align = $item->getExtra(self::ALIGN_END)) && true === $align) {
+            $dropdownMenuClasses[] = 'dropdown-menu-end';
         }
         $dropdownMenuAttributes['class'] = implode(' ', $dropdownMenuClasses);
 
@@ -102,7 +103,9 @@ class Bs5NavbarRenderer extends Renderer implements RendererInterface
         }
 
         $linkAttributes = $item->getLinkAttributes();
-        $linkAttributes['href'] = $this->escape($item->getUri());
+        if (null !== $uri = $item->getUri()) {
+            $linkAttributes['href'] = $this->escape($uri);
+        }
         $linkAttributes['class'] = implode(' ', $linkClasses);
 
         $label = $this->getLabel($item);
@@ -121,7 +124,9 @@ class Bs5NavbarRenderer extends Renderer implements RendererInterface
         $linkClasses = ['dropdown-item'];
 
         $linkAttributes = $item->getLinkAttributes();
-        $linkAttributes['href'] = $this->escape($item->getUri());
+        if (null !== $uri = $item->getUri()) {
+            $linkAttributes['href'] = $this->escape($uri);
+        }
         $linkAttributes['class'] = implode(' ', $linkClasses);
 
         $label = $this->getLabel($item);
