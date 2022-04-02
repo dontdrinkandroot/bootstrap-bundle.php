@@ -3,6 +3,7 @@ services:
     Dontdrinkandroot\BootstrapBundle\Menu\Bs5NavbarRenderer:
         arguments:
             - '@knp_menu.matcher'
+            - '@translator'
             - "%knp_menu.renderer.list.options%"
             - "%kernel.charset%"
         tags:

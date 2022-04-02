@@ -24,7 +24,8 @@
         "php": "^8.1",
         "dontdrinkandroot/common": "^0.2",
         "symfony/config": "^5.4",
-        "symfony/dependency-injection": "^5.4"
+        "symfony/dependency-injection": "^5.4",
+        "symfony/translation": "^5.4"
     },
     "require-dev": {
         "knplabs/knp-menu-bundle": "^3.2",

@@ -2,10 +2,12 @@
 
 namespace Dontdrinkandroot\BootstrapBundle\Menu;
 
+use Dontdrinkandroot\Common\Asserted;
 use Knp\Menu\ItemInterface;
 use Knp\Menu\Matcher\MatcherInterface;
 use Knp\Menu\Renderer\Renderer;
 use Knp\Menu\Renderer\RendererInterface;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 class Bs5NavbarRenderer extends Renderer implements RendererInterface
 {
@@ -14,7 +16,8 @@ class Bs5NavbarRenderer extends Renderer implements RendererInterface
 
     public function __construct(
         private MatcherInterface $matcher,
-        public array $defaultOptions = [],
+        private TranslatorInterface $translator,
+        private array $defaultOptions = [],
         ?string $charset = null
     ) {
         parent::__construct($charset);
@@ -150,7 +153,12 @@ class Bs5NavbarRenderer extends Renderer implements RendererInterface
 
     private function getLabel(ItemInterface $item): string
     {
-        $label = $item->getLabel();
+        $translationDomain = $item->getExtra('translation_domain');
+        if (false === $translationDomain) {
+            $label = $item->getLabel();
+        } else {
+            $label = $this->translator->trans($item->getLabel(), [], $translationDomain);
+        }
 
         return $this->escape($label);
     }
