@@ -7,3 +7,23 @@
 {% block form_group_class -%}
     col-sm-8 col-md-9 col-xl-10
 {%- endblock form_group_class %}
+
+{% block flex_date_widget -%}
+    {% if not valid %}
+        {% set attr = attr|merge({class: (attr.class|default('') ~ ' is-invalid')|trim}) -%}
+        {% set valid = true %}
+    {% endif %}
+    <div {{ block('widget_container_attributes') -}}>
+        <div class="row">
+            <div class="col">
+                {{- form_widget(form.year) -}}
+            </div>
+            <div class="col">
+                {{- form_widget(form.month) -}}
+            </div>
+            <div class="col">
+                {{- form_widget(form.day) -}}
+            </div>
+        </div>
+    </div>
+{%- endblock flex_date_widget %}
