@@ -11,8 +11,11 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 class Bs5NavbarRenderer extends Renderer implements RendererInterface
 {
-    public const ALIGN_END = 'align_end';
-    const DROPDOWN = 'dropdown';
+    public const EXTRA_DROPDOWN = 'dropdown';
+    public const EXTRA_ALIGN_END = 'align_end';
+    public const EXTRA_DIVIDER_PREPEND = 'divider_prepend';
+    public const EXTRA_DIVIDER_APPEND = 'divider_append';
+    public const EXTRA_HEADER = 'header';
 
     public function __construct(
         private MatcherInterface $matcher,
@@ -49,7 +52,7 @@ class Bs5NavbarRenderer extends Renderer implements RendererInterface
 
     private function renderItem(ItemInterface $item, array $options = []): string
     {
-        if (true === $item->getExtra(self::DROPDOWN)) {
+        if (true === $item->getExtra(self::EXTRA_DROPDOWN)) {
             return $this->renderDropdown($item, $options);
         }
 
@@ -73,7 +76,7 @@ class Bs5NavbarRenderer extends Renderer implements RendererInterface
         $toggleAttributes['aria-expanded'] = 'false';
 
         $dropdownMenuAttributes = [];
-        if ((null !== $align = $item->getExtra(self::ALIGN_END)) && true === $align) {
+        if ((null !== $align = $item->getExtra(self::EXTRA_ALIGN_END)) && true === $align) {
             $dropdownMenuClasses[] = 'dropdown-menu-end';
         }
         $dropdownMenuAttributes['class'] = implode(' ', $dropdownMenuClasses);
@@ -84,7 +87,11 @@ class Bs5NavbarRenderer extends Renderer implements RendererInterface
         $html .= '</a>';
         $html .= '<div' . $this->renderHtmlAttributes($dropdownMenuAttributes) . '>';
         foreach ($item->getChildren() as $child) {
-            $html .= $this->renderDropdownItem($child, $options);
+            if (true === $child->getExtra(self::EXTRA_HEADER)) {
+                $html .= $this->renderHeaderItem($child, $options);
+            } else {
+                $html .= $this->renderDropdownItem($child, $options);
+            }
         }
         $html .= '</div>';
 
@@ -136,7 +143,7 @@ class Bs5NavbarRenderer extends Renderer implements RendererInterface
 
         $html = '';
 
-        if (true === $item->getExtra('divider_prepend')) {
+        if (true === $item->getExtra(self::EXTRA_DIVIDER_PREPEND)) {
             $html .= '<div class="dropdown-divider"></div>';
         }
 
@@ -144,7 +151,31 @@ class Bs5NavbarRenderer extends Renderer implements RendererInterface
         $html .= $label;
         $html .= '</a>';
 
-        if (true === $item->getExtra('divider_append')) {
+        if (true === $item->getExtra(self::EXTRA_DIVIDER_APPEND)) {
+            $html .= '<div class="dropdown-divider"></div>';
+        }
+
+        return $html;
+    }
+
+    private function renderHeaderItem(ItemInterface $item, array $options = []): string
+    {
+        $classes = ['dropdown-header'];
+        $attributes = ['class' => implode(' ', $classes)];
+
+        $label = $this->getLabel($item);
+
+        $html = '';
+
+        if (true === $item->getExtra(self::EXTRA_DIVIDER_PREPEND)) {
+            $html .= '<div class="dropdown-divider"></div>';
+        }
+
+        $html .= '<h6' . $this->renderHtmlAttributes($attributes) . '>';
+        $html .= $label;
+        $html .= '</h6>';
+
+        if (true === $item->getExtra(self::EXTRA_DIVIDER_APPEND)) {
             $html .= '<div class="dropdown-divider"></div>';
         }
 

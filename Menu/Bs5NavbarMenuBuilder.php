@@ -17,7 +17,7 @@ class Bs5NavbarMenuBuilder
     protected function addDropdownMenu(ItemInterface $item, string $name, bool $alignEnd = false): ItemInterface
     {
         return $item->addChild($name)
-            ->setExtra(Bs5NavbarRenderer::DROPDOWN, true)
-            ->setExtra(Bs5NavbarRenderer::ALIGN_END, $alignEnd);
+            ->setExtra(Bs5NavbarRenderer::EXTRA_DROPDOWN, true)
+            ->setExtra(Bs5NavbarRenderer::EXTRA_ALIGN_END, $alignEnd);
     }
 }
