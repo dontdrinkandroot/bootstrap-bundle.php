@@ -16,33 +16,6 @@ class DdrBootstrapExtension extends Extension implements PrependExtensionInterfa
     /**
      * {@inheritdoc}
      */
-    public function prepend(ContainerBuilder $container): void
-    {
-        $bundles = $container->getParameter('kernel.bundles');
-
-        if (in_array(TwigBundle::class, $bundles, true)) {
-            $container->prependExtensionConfig('twig', [
-                'form_themes' => ['@DdrBootstrap/Form/bootstrap_5_horizontal_layout.html.twig']
-            ]);
-        }
-
-        if (in_array(KnpPaginatorBundle::class, $bundles, true)) {
-            $container->prependExtensionConfig(
-                'knp_paginator',
-                [
-                    'template' => [
-                        'pagination' => '@KnpPaginator/Pagination/bootstrap_v5_pagination.html.twig',
-                        'sortable'   => '@KnpPaginator/Pagination/bootstrap_v5_fa_sortable_link.html.twig',
-                        'filtration' => '@KnpPaginator/Pagination/bootstrap_v5_filtration.html.twig'
-                    ]
-                ]
-            );
-        }
-    }
-
-    /**
-     * {@inheritdoc}
-     */
     public function load(array $configs, ContainerBuilder $container): void
     {
         $configuration = new Configuration();
@@ -54,6 +27,35 @@ class DdrBootstrapExtension extends Extension implements PrependExtensionInterfa
         $bundles = $container->getParameter('kernel.bundles');
         if (in_array(KnpMenuBundle::class, $bundles)) {
             $loader->load('services_knp_menu.yaml');
+        }
+
+        if (in_array(KnpPaginatorBundle::class, $bundles, true)) {
+            $container->setParameter(
+                'knp_paginator.template.pagination',
+                '@KnpPaginator/Pagination/bootstrap_v5_pagination.html.twig'
+            );
+            $container->setParameter(
+                'knp_paginator.template.filtration',
+                '@KnpPaginator/Pagination/bootstrap_v5_filtration.html.twig'
+            );
+            $container->setParameter(
+                'knp_paginator.template.sortable',
+                '@KnpPaginator/Pagination/bootstrap_v5_fa_sortable_link.html.twig'
+            );
+        }
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function prepend(ContainerBuilder $container): void
+    {
+        $bundles = $container->getParameter('kernel.bundles');
+
+        if (in_array(TwigBundle::class, $bundles, true)) {
+            $container->prependExtensionConfig('twig', [
+                'form_themes' => ['@DdrBootstrap/Form/bootstrap_5_horizontal_layout.html.twig']
+            ]);
         }
     }
 }
