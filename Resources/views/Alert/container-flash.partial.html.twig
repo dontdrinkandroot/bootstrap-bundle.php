@@ -1,0 +1,20 @@
+{% for type, messages in app.flashes() %}
+    {% set alertType = type %}
+    {% if type not in ['alert-success', 'alert-warning', 'alert-danger', 'alert-info'] %}
+        {% if type == 'success' %}
+            {% set alertType = 'alert-success' %}
+        {% elseif type == 'error' %}
+            {% set alertType = 'alert-danger' %}
+        {% else %}
+            {% set alertType = 'alert-info' %}
+        {% endif %}
+    {% endif %}
+
+    {% for message in messages %}
+        <div class="alert {{ alertType }}">
+            <div class="container">
+                {{ message }}
+            </div>
+        </div>
+    {% endfor %}
+{% endfor %}
