@@ -1,3 +1,6 @@
+{% if additionalClasses is not defined %}
+    {% set additionalClasses = '' %}
+{% endif %}
 {% for type, messages in app.flashes() %}
     {% set alertType = type %}
     {% if type not in ['alert-success', 'alert-warning', 'alert-danger', 'alert-info'] %}
@@ -11,7 +14,7 @@
     {% endif %}
 
     {% for message in messages %}
-        <div class="alert {{ alertType }}">
+        <div class="alert {{ alertType }} {{ additionalClasses }}">
             <div class="container">
                 {{ message }}
             </div>
