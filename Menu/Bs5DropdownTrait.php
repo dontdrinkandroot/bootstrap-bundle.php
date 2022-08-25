@@ -13,7 +13,7 @@ trait Bs5DropdownTrait
         array $options = [],
     ): ItemInterface {
         return $item->addChild($name, $options)
-            ->setExtra(Bs5NavbarRenderer::EXTRA_DROPDOWN, true)
-            ->setExtra(Bs5NavbarRenderer::EXTRA_ALIGN_END, $alignEnd);
+            ->setExtra(Bs5DropdownMenuRenderer::EXTRA_DROPDOWN, true)
+            ->setExtra(Bs5DropdownMenuRenderer::EXTRA_ALIGN_END, $alignEnd);
     }
 }
