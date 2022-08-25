@@ -1,0 +1,12 @@
+{% if additionalClasses is not defined%}
+    {% set additionalClasses = '' %}
+{% endif %}
+<button class="dropdown-toggle ddr-no-caret btn btn-sm btn-link {{ additionalClasses }}"
+        type="button"
+        id="dropdownMenuButton"
+        data-bs-toggle="dropdown"
+        aria-haspopup="true"
+        aria-expanded="false"
+>
+    <span class="fas fa-fw fa-ellipsis-v"></span>
+</button>
