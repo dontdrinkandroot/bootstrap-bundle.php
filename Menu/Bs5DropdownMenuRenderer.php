@@ -2,6 +2,7 @@
 
 namespace Dontdrinkandroot\BootstrapBundle\Menu;
 
+use Dontdrinkandroot\BootstrapBundle\Model\MenuItemExtra;
 use Knp\Menu\ItemInterface;
 use Knp\Menu\Renderer\Renderer;
 use Knp\Menu\Renderer\RendererInterface;
@@ -11,11 +12,8 @@ class Bs5DropdownMenuRenderer extends Renderer implements RendererInterface
 {
     public const EXTRA_DIVIDER_PREPEND = 'divider_prepend';
     public const EXTRA_DIVIDER_APPEND = 'divider_append';
-    public const EXTRA_HEADER = 'header';
     public const EXTRA_DROPDOWN = 'dropdown';
     public const EXTRA_ALIGN_END = 'align_end';
-    public const EXTRA_TRANSLATION_DOMAIN = 'translation_domain';
-    public const EXTRA_ICON = 'icon';
 
     public function __construct(private readonly TranslatorInterface $translator, ?string $charset = null)
     {
@@ -36,7 +34,7 @@ class Bs5DropdownMenuRenderer extends Renderer implements RendererInterface
         $dropdownMenuAttributes['class'] = implode(' ', $dropdownMenuClasses);
         $html .= '<div' . $this->renderHtmlAttributes($dropdownMenuAttributes) . '>';
         foreach ($item->getChildren() as $child) {
-            if (true === $child->getExtra(self::EXTRA_HEADER)) {
+            if (true === $child->getExtra(MenuItemExtra::DROPDOWN_HEADER)) {
                 $html .= $this->renderHeaderItem($child, $options);
             } else {
                 $html .= $this->renderDropdownItem($child, $options);
@@ -76,7 +74,7 @@ class Bs5DropdownMenuRenderer extends Renderer implements RendererInterface
         }
 
         $html .= '<a' . $this->renderHtmlAttributes($linkAttributes) . '>';
-        if (null !== ($icon = $item->getExtra(self::EXTRA_ICON))) {
+        if (null !== ($icon = $item->getExtra(MenuItemExtra::ICON))) {
             $html .= '<span ' . $this->renderHtmlAttribute('class', $icon) . '></span>';
         }
         $html .= $label;
@@ -115,7 +113,7 @@ class Bs5DropdownMenuRenderer extends Renderer implements RendererInterface
 
     private function getLabel(ItemInterface $item): string
     {
-        $translationDomain = $item->getExtra(self::EXTRA_TRANSLATION_DOMAIN);
+        $translationDomain = $item->getExtra(MenuItemExtra::TRANSLATION_DOMAIN);
         if (false === $translationDomain) {
             $label = $item->getLabel();
         } else {
