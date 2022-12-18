@@ -32,7 +32,9 @@ jobs:
                     coverage: "pcov"
                     ini-values: "zend.assertions=1"
             -   name: "Globally install symfony/flex"
-                run: "composer global require --no-progress --no-scripts --no-plugins symfony/flex"
+                run: |
+                    composer global config --no-plugins allow-plugins.symfony/flex true
+                    composer global require --no-progress --no-scripts --no-plugins symfony/flex
             -   name: "Install dependencies with Composer"
                 uses: "ramsey/composer-install@v1"
                 with:
@@ -62,7 +64,9 @@ jobs:
                 with:
                     php-version: "8.1"
             -   name: "Globally install symfony/flex"
-                run: "composer global require --no-progress --no-scripts --no-plugins symfony/flex"
+                run: |
+                    composer global config --no-plugins allow-plugins.symfony/flex true
+                    composer global require --no-progress --no-scripts --no-plugins symfony/flex
             -   name: "Install dependencies with Composer"
                 uses: "ramsey/composer-install@v1"
             -   name: "Install psalm"
