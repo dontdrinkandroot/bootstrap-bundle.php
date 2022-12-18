@@ -42,6 +42,10 @@
         "knplabs/knp-menu-bundle": "For menu integration"
     },
     "extra": {
+        "symfony": {
+            "require": "5.4.*",
+            "allow-contrib": true
+        },
         "branch-alias": {
             "dev-master": "0.2.x-dev"
         }
