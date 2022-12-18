@@ -51,12 +51,12 @@ class Bs5DropdownMenuRenderer extends Renderer implements RendererInterface
 
         $attributes = $item->getAttributes();
         if (array_key_exists('class', $attributes)) {
-            $cssClasses .= ' '. $attributes['class'];
+            $cssClasses .= ' ' . $attributes['class'];
         }
 
         $linkAttributes = $item->getLinkAttributes();
         if (array_key_exists('class', $linkAttributes)) {
-            $cssClasses .= ' '. $linkAttributes['class'];
+            $cssClasses .= ' ' . $linkAttributes['class'];
         }
 
         $linkAttributes['class'] = $cssClasses;

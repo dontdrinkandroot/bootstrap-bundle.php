@@ -2,7 +2,6 @@
 
 namespace Dontdrinkandroot\BootstrapBundle\Menu;
 
-use Dontdrinkandroot\Common\Asserted;
 use Knp\Menu\ItemInterface;
 use Knp\Menu\Matcher\MatcherInterface;
 use Knp\Menu\Renderer\Renderer;

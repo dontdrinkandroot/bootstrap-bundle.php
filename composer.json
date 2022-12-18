@@ -14,11 +14,13 @@
     "prefer-stable": true,
     "autoload": {
         "psr-4": {
-            "Dontdrinkandroot\\BootstrapBundle\\": ""
-        },
-        "exclude-from-classmap": [
-            "/Tests/"
-        ]
+            "Dontdrinkandroot\\BootstrapBundle\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Dontdrinkandroot\\BootstrapBundle\\Tests\\": "tests/"
+        }
     },
     "require": {
         "php": "^8.1",

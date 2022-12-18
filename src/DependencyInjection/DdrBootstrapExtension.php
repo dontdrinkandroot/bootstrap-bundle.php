@@ -2,13 +2,14 @@
 
 namespace Dontdrinkandroot\BootstrapBundle\DependencyInjection;
 
+use Dontdrinkandroot\Common\Asserted;
 use Knp\Bundle\MenuBundle\KnpMenuBundle;
 use Knp\Bundle\PaginatorBundle\KnpPaginatorBundle;
 use Symfony\Bundle\TwigBundle\TwigBundle;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Extension\PrependExtensionInterface;
-use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
+use Symfony\Component\DependencyInjection\Loader\PhpFileLoader;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 
 class DdrBootstrapExtension extends Extension implements PrependExtensionInterface
@@ -21,12 +22,12 @@ class DdrBootstrapExtension extends Extension implements PrependExtensionInterfa
         $configuration = new Configuration();
         $config = $this->processConfiguration($configuration, $configs);
 
-        $loader = new YamlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
-        $loader->load('services.yaml');
+        $loader = new PhpFileLoader($container, new FileLocator(__DIR__ . '/../../config/services'));
+        $loader->load('services.php');
 
-        $bundles = $container->getParameter('kernel.bundles');
-        if (in_array(KnpMenuBundle::class, $bundles)) {
-            $loader->load('services_knp_menu.yaml');
+        $bundles = Asserted::array($container->getParameter('kernel.bundles'));
+        if (in_array(KnpMenuBundle::class, $bundles, true)) {
+            $loader->load('knp_menu.php');
         }
 
         if (in_array(KnpPaginatorBundle::class, $bundles, true)) {
@@ -50,7 +51,7 @@ class DdrBootstrapExtension extends Extension implements PrependExtensionInterfa
      */
     public function prepend(ContainerBuilder $container): void
     {
-        $bundles = $container->getParameter('kernel.bundles');
+        $bundles = Asserted::array($container->getParameter('kernel.bundles'));
 
         if (in_array(TwigBundle::class, $bundles, true)) {
             $container->prependExtensionConfig('twig', [

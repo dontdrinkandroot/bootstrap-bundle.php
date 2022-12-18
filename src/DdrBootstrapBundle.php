@@ -4,9 +4,13 @@ namespace Dontdrinkandroot\BootstrapBundle;
 
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
-/**
- * @author Philip Washington Sorst <philip@sorst.net>
- */
 class DdrBootstrapBundle extends Bundle
 {
+    /**
+     * {@inheritdoc}
+     */
+    public function getPath(): string
+    {
+        return dirname(__DIR__);
+    }
 }

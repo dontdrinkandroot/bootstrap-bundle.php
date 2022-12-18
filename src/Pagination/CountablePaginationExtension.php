@@ -11,8 +11,10 @@ use Twig\TwigFunction;
 
 class CountablePaginationExtension extends AbstractExtension
 {
-    public function __construct(private UrlGeneratorInterface $generator, private RequestStack $requestStack)
-    {
+    public function __construct(
+        private readonly UrlGeneratorInterface $generator,
+        private readonly RequestStack $requestStack
+    ) {
     }
 
     /**
@@ -108,7 +110,7 @@ class CountablePaginationExtension extends AbstractExtension
         array $params,
         array $cssClasses = [],
         string $rel = null
-    ) {
+    ): string {
         $params['page'] = $page;
         $path = '#';
         if (!in_array('disabled', $cssClasses)) {
@@ -126,7 +128,7 @@ class CountablePaginationExtension extends AbstractExtension
         return $html;
     }
 
-    public function getPath($name, $parameters = [], $relative = false)
+    public function getPath(string $name, array $parameters = [], bool $relative = false): string
     {
         return $this->generator->generate(
             $name,
