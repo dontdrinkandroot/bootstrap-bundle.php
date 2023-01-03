@@ -41,7 +41,7 @@
         "symfony/twig-bundle": "^5.4",
         "symfony/yaml": "^5.4",
         "doctrine/orm": "^2.10",
-        "knplabs/knp-paginator-bundle": "^5.8"
+        "knplabs/knp-paginator-bundle": "^5.9"
     },
     "suggest": {
         "knplabs/knp-menu-bundle": "For menu integration",
