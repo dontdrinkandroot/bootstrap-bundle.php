@@ -34,7 +34,7 @@
     },
     "require-dev": {
         "knplabs/knp-menu-bundle": "^3.2",
-        "phpunit/phpunit": "^9.5.10",
+        "phpunit/phpunit": "^9.5.28",
         "symfony/browser-kit": "^5.4",
         "symfony/css-selector": "^5.4",
         "symfony/phpunit-bridge": "^5.4",
