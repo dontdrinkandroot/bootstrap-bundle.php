@@ -38,7 +38,6 @@
         "symfony/browser-kit": "^5.4",
         "symfony/css-selector": "^5.4",
         "symfony/phpunit-bridge": "^5.4",
-        "symfony/twig-bundle": "^5.4",
         "symfony/yaml": "^5.4",
         "doctrine/orm": "^2.10",
         "knplabs/knp-paginator-bundle": "^5.9"
@@ -55,5 +54,8 @@
         "branch-alias": {
             "dev-master": "0.2.x-dev"
         }
+    },
+    "config": {
+        "sort-packages": true
     }
 }
