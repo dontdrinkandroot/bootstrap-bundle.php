@@ -10,10 +10,10 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 class Bs5DropdownMenuRenderer extends Renderer implements RendererInterface
 {
-    public const EXTRA_DIVIDER_PREPEND = 'divider_prepend';
-    public const EXTRA_DIVIDER_APPEND = 'divider_append';
-    public const EXTRA_DROPDOWN = 'dropdown';
-    public const EXTRA_ALIGN_END = 'align_end';
+    final public const EXTRA_DIVIDER_PREPEND = 'divider_prepend';
+    final public const EXTRA_DIVIDER_APPEND = 'divider_append';
+    final public const EXTRA_DROPDOWN = 'dropdown';
+    final public const EXTRA_ALIGN_END = 'align_end';
 
     public function __construct(private readonly TranslatorInterface $translator, ?string $charset = null)
     {

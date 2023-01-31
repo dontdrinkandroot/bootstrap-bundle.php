@@ -9,7 +9,7 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 use function Symfony\Component\DependencyInjection\Loader\Configurator\service;
 
-return function (ContainerConfigurator $configurator) {
+return function (ContainerConfigurator $configurator): void {
     $services = $configurator->services();
 
     $services->set(CountablePaginationExtension::class, CountablePaginationExtension::class)

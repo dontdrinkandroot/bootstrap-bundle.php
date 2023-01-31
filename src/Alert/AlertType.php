@@ -4,8 +4,8 @@ namespace Dontdrinkandroot\BootstrapBundle\Alert;
 
 class AlertType
 {
-    const SUCCESS = 'alert-success';
-    const DANGER = 'alert-danger';
-    const WARNING = 'alert-warning';
-    const INFO = 'alert-info';
+    final const SUCCESS = 'alert-success';
+    final const DANGER = 'alert-danger';
+    final const WARNING = 'alert-warning';
+    final const INFO = 'alert-info';
 }

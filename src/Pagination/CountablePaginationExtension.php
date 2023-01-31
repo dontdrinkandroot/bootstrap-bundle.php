@@ -25,12 +25,12 @@ class CountablePaginationExtension extends AbstractExtension
         return [
             new TwigFunction(
                 'ddr_bs_countable_pagination',
-                [$this, 'generatePagination'],
+                $this->generatePagination(...),
                 ['is_safe' => ['html']]
             ),
             new TwigFunction(
                 'ddr_bs_paginator_pagination',
-                [$this, 'generatePagination'],
+                $this->generatePagination(...),
                 ['is_safe' => ['html']]
             )
         ];

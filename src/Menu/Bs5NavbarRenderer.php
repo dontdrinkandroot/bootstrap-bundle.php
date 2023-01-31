@@ -11,10 +11,10 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 class Bs5NavbarRenderer extends Renderer implements RendererInterface
 {
     public function __construct(
-        private MatcherInterface $matcher,
-        private TranslatorInterface $translator,
+        private readonly MatcherInterface $matcher,
+        private readonly TranslatorInterface $translator,
         private readonly Bs5DropdownMenuRenderer $dropdownMenuRenderer,
-        private array $defaultOptions = [],
+        private readonly array $defaultOptions = [],
         ?string $charset = null,
     ) {
         parent::__construct($charset);
