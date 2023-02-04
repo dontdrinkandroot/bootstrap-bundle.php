@@ -33,14 +33,15 @@
         "twig/twig": "^3.5"
     },
     "require-dev": {
+        "doctrine/orm": "^2.10",
         "knplabs/knp-menu-bundle": "^3.2",
+        "knplabs/knp-paginator-bundle": "^5.9",
         "phpunit/phpunit": "^9.5.28",
         "symfony/browser-kit": "^5.4",
         "symfony/css-selector": "^5.4",
+        "symfony/flex": "^2.2",
         "symfony/phpunit-bridge": "^5.4",
-        "symfony/yaml": "^5.4",
-        "doctrine/orm": "^2.10",
-        "knplabs/knp-paginator-bundle": "^5.9"
+        "symfony/yaml": "^5.4"
     },
     "suggest": {
         "knplabs/knp-menu-bundle": "For menu integration",
@@ -56,6 +57,9 @@
         }
     },
     "config": {
-        "sort-packages": true
+        "sort-packages": true,
+        "allow-plugins": {
+            "symfony/flex": true
+        }
     }
 }
