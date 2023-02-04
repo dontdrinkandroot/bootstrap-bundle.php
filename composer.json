@@ -39,7 +39,6 @@
         "phpunit/phpunit": "^9.5.28",
         "symfony/browser-kit": "^5.4",
         "symfony/css-selector": "^5.4",
-        "symfony/flex": "^2.2",
         "symfony/phpunit-bridge": "^5.4",
         "symfony/yaml": "^5.4"
     },
@@ -57,9 +56,6 @@
         }
     },
     "config": {
-        "sort-packages": true,
-        "allow-plugins": {
-            "symfony/flex": true
-        }
+        "sort-packages": true
     }
 }
