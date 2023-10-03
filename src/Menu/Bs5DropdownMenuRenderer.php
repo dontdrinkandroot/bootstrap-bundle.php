@@ -10,7 +10,13 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 class Bs5DropdownMenuRenderer extends Renderer implements RendererInterface
 {
+    /**
+     * @deprecated Render divider as item with extra
+     */
     final public const EXTRA_DIVIDER_PREPEND = 'divider_prepend';
+    /**
+     * @deprecated Render divider as item with extra
+     */
     final public const EXTRA_DIVIDER_APPEND = 'divider_append';
     final public const EXTRA_DROPDOWN = 'dropdown';
     final public const EXTRA_ALIGN_END = 'align_end';
@@ -36,6 +42,8 @@ class Bs5DropdownMenuRenderer extends Renderer implements RendererInterface
         foreach ($item->getChildren() as $child) {
             if (true === $child->getExtra(MenuItemExtra::DROPDOWN_HEADER)) {
                 $html .= $this->renderHeaderItem($child, $options);
+            } elseif (true === $child->getExtra(MenuItemExtra::DROPDOWN_DIVIDER)) {
+                $html .= $this->renderDivider($child, $options);
             } else {
                 $html .= $this->renderDropdownItem($child, $options);
             }
@@ -121,5 +129,10 @@ class Bs5DropdownMenuRenderer extends Renderer implements RendererInterface
         }
 
         return $this->escape($label);
+    }
+
+    private function renderDivider(ItemInterface $child, array $options): string
+    {
+        return '<div class="dropdown-divider"></div>';
     }
 }

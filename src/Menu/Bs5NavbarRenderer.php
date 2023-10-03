@@ -2,6 +2,7 @@
 
 namespace Dontdrinkandroot\BootstrapBundle\Menu;
 
+use Dontdrinkandroot\BootstrapBundle\Model\MenuItemExtra;
 use Knp\Menu\ItemInterface;
 use Knp\Menu\Matcher\MatcherInterface;
 use Knp\Menu\Renderer\Renderer;
@@ -70,6 +71,9 @@ class Bs5NavbarRenderer extends Renderer implements RendererInterface
 
         $html = '<li' . $this->renderHtmlAttributes($attributes) . '>';
         $html .= '<a' . $this->renderHtmlAttributes($toggleAttributes) . '>';
+        if (null !== ($icon = $item->getExtra(MenuItemExtra::ICON))) {
+            $html .= '<span ' . $this->renderHtmlAttribute('class', $icon) . '></span>';
+        }
         $html .= $this->getLabel($item);
         $html .= '</a>';
         $html .= $this->dropdownMenuRenderer->render($item);
