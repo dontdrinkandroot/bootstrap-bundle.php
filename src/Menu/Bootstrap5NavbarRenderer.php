@@ -2,19 +2,19 @@
 
 namespace Dontdrinkandroot\BootstrapBundle\Menu;
 
-use Dontdrinkandroot\BootstrapBundle\Model\MenuItemExtra;
+use Dontdrinkandroot\BootstrapBundle\Model\ItemExtra;
 use Knp\Menu\ItemInterface;
 use Knp\Menu\Matcher\MatcherInterface;
 use Knp\Menu\Renderer\Renderer;
 use Knp\Menu\Renderer\RendererInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
-class Bs5NavbarRenderer extends Renderer implements RendererInterface
+class Bootstrap5NavbarRenderer extends Renderer implements RendererInterface
 {
     public function __construct(
         private readonly MatcherInterface $matcher,
         private readonly TranslatorInterface $translator,
-        private readonly Bs5DropdownMenuRenderer $dropdownMenuRenderer,
+        private readonly Bootstrap5DropdownMenuRenderer $dropdownMenuRenderer,
         private readonly array $defaultOptions = [],
         ?string $charset = null,
     ) {
@@ -47,7 +47,7 @@ class Bs5NavbarRenderer extends Renderer implements RendererInterface
 
     private function renderItem(ItemInterface $item, array $options = []): string
     {
-        if (true === $item->getExtra(Bs5DropdownMenuRenderer::EXTRA_DROPDOWN)) {
+        if (true === $item->getExtra(ItemExtra::DROPDOWN)) {
             return $this->renderDropdown($item, $options);
         }
 
@@ -71,7 +71,7 @@ class Bs5NavbarRenderer extends Renderer implements RendererInterface
 
         $html = '<li' . $this->renderHtmlAttributes($attributes) . '>';
         $html .= '<a' . $this->renderHtmlAttributes($toggleAttributes) . '>';
-        if (null !== ($icon = $item->getExtra(MenuItemExtra::ICON))) {
+        if (null !== ($icon = $item->getExtra(ItemExtra::ICON))) {
             $html .= '<span ' . $this->renderHtmlAttribute('class', $icon) . '></span>';
         }
         $html .= $this->getLabel($item);

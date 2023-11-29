@@ -1,6 +1,6 @@
 <?php
 
-namespace Dontdrinkandroot\BootstrapBundle\Alert;
+namespace Dontdrinkandroot\BootstrapBundle\Model;
 
 class AlertType
 {

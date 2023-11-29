@@ -2,8 +2,8 @@
 
 namespace Dontdrinkandroot\BootstrapBundle\Config;
 
-use Dontdrinkandroot\BootstrapBundle\Menu\Bs5DropdownMenuRenderer;
-use Dontdrinkandroot\BootstrapBundle\Menu\Bs5NavbarRenderer;
+use Dontdrinkandroot\BootstrapBundle\Menu\Bootstrap5DropdownMenuRenderer;
+use Dontdrinkandroot\BootstrapBundle\Menu\Bootstrap5NavbarRenderer;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
 
 use function Symfony\Component\DependencyInjection\Loader\Configurator\param;
@@ -12,20 +12,20 @@ use function Symfony\Component\DependencyInjection\Loader\Configurator\service;
 return function (ContainerConfigurator $configurator): void {
     $services = $configurator->services();
 
-    $services->set(Bs5DropdownMenuRenderer::class, Bs5DropdownMenuRenderer::class)
+    $services->set(Bootstrap5DropdownMenuRenderer::class, Bootstrap5DropdownMenuRenderer::class)
         ->args([
             service('translator'),
             param('kernel.charset')
         ])
-        ->tag('knp_menu.renderer', ['alias' => 'ddr_bs5_dropdown_menu']);
+        ->tag('knp_menu.renderer', ['alias' => 'ddr_bootstrap5_dropdown_menu']);
 
-    $services->set(Bs5NavbarRenderer::class, Bs5NavbarRenderer::class)
+    $services->set(Bootstrap5NavbarRenderer::class, Bootstrap5NavbarRenderer::class)
         ->args([
             service('knp_menu.matcher'),
             service('translator'),
-            service(Bs5DropdownMenuRenderer::class),
+            service(Bootstrap5DropdownMenuRenderer::class),
             param('knp_menu.renderer.list.options'),
             param('kernel.charset')
         ])
-        ->tag('knp_menu.renderer', ['alias' => 'ddr_navbar_bs5']);
+        ->tag('knp_menu.renderer', ['alias' => 'ddr_bootstrap5_navbar']);
 };

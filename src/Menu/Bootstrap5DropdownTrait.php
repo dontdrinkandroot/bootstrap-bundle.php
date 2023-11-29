@@ -4,7 +4,7 @@ namespace Dontdrinkandroot\BootstrapBundle\Menu;
 
 use Knp\Menu\ItemInterface;
 
-trait Bs5DropdownTrait
+trait Bootstrap5DropdownTrait
 {
     protected function addDropdownMenu(
         ItemInterface $item,
@@ -13,7 +13,7 @@ trait Bs5DropdownTrait
         array $options = [],
     ): ItemInterface {
         return $item->addChild($name, $options)
-            ->setExtra(Bs5DropdownMenuRenderer::EXTRA_DROPDOWN, true)
-            ->setExtra(Bs5DropdownMenuRenderer::EXTRA_ALIGN_END, $alignEnd);
+            ->setExtra(Bootstrap5DropdownMenuRenderer::EXTRA_DROPDOWN, true)
+            ->setExtra(Bootstrap5DropdownMenuRenderer::EXTRA_ALIGN_END, $alignEnd);
     }
 }

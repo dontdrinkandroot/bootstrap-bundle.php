@@ -2,10 +2,11 @@
 
 namespace Dontdrinkandroot\BootstrapBundle\Menu;
 
+use Dontdrinkandroot\BootstrapBundle\Model\ItemExtra;
 use Knp\Menu\FactoryInterface;
 use Knp\Menu\ItemInterface;
 
-class Bs5NavbarMenuBuilder
+class Bootstrap5NavbarMenuBuilder
 {
     public function __construct(protected readonly FactoryInterface $factory)
     {
@@ -14,7 +15,7 @@ class Bs5NavbarMenuBuilder
     protected function addDropdownMenu(ItemInterface $item, string $name, bool $alignEnd = false): ItemInterface
     {
         return $item->addChild($name)
-            ->setExtra(Bs5DropdownMenuRenderer::EXTRA_DROPDOWN, true)
-            ->setExtra(Bs5DropdownMenuRenderer::EXTRA_ALIGN_END, $alignEnd);
+            ->setExtra(ItemExtra::DROPDOWN, true)
+            ->setExtra(ItemExtra::ALIGN_END, $alignEnd);
     }
 }

@@ -8,6 +8,7 @@
 >
     <projectFiles>
         <directory name="src/"/>
+        <directory name="tests/"/>
         <ignoreFiles>
             <directory name="vendor"/>
         </ignoreFiles>
@@ -19,10 +20,5 @@
                 <referencedMethod name="Symfony\Component\Config\Definition\Builder\NodeDefinition::children"/>
             </errorLevel>
         </PossiblyUndefinedMethod>
-        <MixedMethodCall>
-            <errorLevel type="suppress">
-                <file name="src/DependencyInjection/Configuration.php"/>
-            </errorLevel>
-        </MixedMethodCall>
     </issueHandlers>
 </psalm>
