@@ -1,9 +1,0 @@
-services:
-
-    _defaults:
-        autoconfigure: true
-        autowire: true
-
-    Dontdrinkandroot\BootstrapBundle\Tests\TestApp\Controller\:
-        resource: '../Controller'
-        tags: [ 'controller.service_arguments' ]

@@ -34,7 +34,7 @@
     },
     "require-dev": {
         "doctrine/orm": "^2.10",
-        "knplabs/knp-menu-bundle": "^3.2",
+        "knplabs/knp-menu-bundle": "^3.3",
         "knplabs/knp-paginator-bundle": "^5.9",
         "phpunit/phpunit": "^9.6",
         "symfony/browser-kit": "^6.4",
@@ -56,9 +56,6 @@
         }
     },
     "config": {
-        "sort-packages": true,
-        "allow-plugins": {
-            "symfony/flex": true
-        }
+        "sort-packages": true
     }
 }

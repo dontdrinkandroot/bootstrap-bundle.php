@@ -1,3 +1,7 @@
 test_app.alerts:
     path: '/alerts'
     controller: 'Dontdrinkandroot\BootstrapBundle\Tests\TestApp\Controller\AlertAction'
+
+test_app.navbar:
+    path: '/navbar'
+    controller: 'Dontdrinkandroot\BootstrapBundle\Tests\TestApp\Controller\NavbarNavAction'

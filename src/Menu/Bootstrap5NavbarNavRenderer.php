@@ -9,7 +9,7 @@ use Knp\Menu\Renderer\Renderer;
 use Knp\Menu\Renderer\RendererInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
-class Bootstrap5NavbarRenderer extends Renderer implements RendererInterface
+class Bootstrap5NavbarNavRenderer extends Renderer implements RendererInterface
 {
     public function __construct(
         private readonly MatcherInterface $matcher,
