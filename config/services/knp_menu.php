@@ -21,11 +21,11 @@ return function (ContainerConfigurator $configurator): void {
 
     $services->set(Bootstrap5NavbarNavRenderer::class)
         ->args([
-            service('knp_menu.matcher'),
             service('translator'),
+            service('knp_menu.matcher'),
             service(Bootstrap5DropdownMenuRenderer::class),
             param('knp_menu.renderer.list.options'),
-            param('kernel.charset')
+            param('kernel.charset'),
         ])
         ->tag('knp_menu.renderer', ['alias' => 'ddr_bootstrap5_navbar_nav']);
 };

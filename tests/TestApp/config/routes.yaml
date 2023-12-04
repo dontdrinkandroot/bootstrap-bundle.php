@@ -5,3 +5,7 @@ test_app.alerts:
 test_app.navbar:
     path: '/navbar'
     controller: 'Dontdrinkandroot\BootstrapBundle\Tests\TestApp\Controller\NavbarNavAction'
+
+test_app.dropdown_menu:
+    path: '/dropdown-menu'
+    controller: 'Dontdrinkandroot\BootstrapBundle\Tests\TestApp\Controller\DropdownMenuAction'

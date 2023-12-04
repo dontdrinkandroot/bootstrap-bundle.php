@@ -2,6 +2,7 @@
 
 namespace Dontdrinkandroot\BootstrapBundle\Tests\TestApp\Config;
 
+use Dontdrinkandroot\BootstrapBundle\Tests\TestApp\Service\Menu\DropdownMenuBuilder;
 use Dontdrinkandroot\BootstrapBundle\Tests\TestApp\Service\Menu\NavbarNavMenuBuilder;
 use Knp\Menu\ItemInterface;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
@@ -28,4 +29,15 @@ return function (ContainerConfigurator $configurator): void {
         ->class(ItemInterface::class)
         ->factory([service(NavbarNavMenuBuilder::class), 'createMenu'])
         ->tag('knp_menu.menu', ['alias' => $navBarNavId]);
+
+    $services->set(DropdownMenuBuilder::class)
+        ->args([
+            service('knp_menu.factory')
+        ]);
+
+    $dropdownMenuId = 'ddr.bootstrap.test.dropdown';
+    $services->set($dropdownMenuId)
+        ->class(ItemInterface::class)
+        ->factory([service(DropdownMenuBuilder::class), 'createMenu'])
+        ->tag('knp_menu.menu', ['alias' => $dropdownMenuId]);
 };

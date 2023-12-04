@@ -2,23 +2,20 @@
 
 namespace Dontdrinkandroot\BootstrapBundle\Menu;
 
-use Dontdrinkandroot\BootstrapBundle\Model\ItemExtra;
 use Knp\Menu\ItemInterface;
 use Knp\Menu\Matcher\MatcherInterface;
-use Knp\Menu\Renderer\Renderer;
-use Knp\Menu\Renderer\RendererInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
-class Bootstrap5NavbarNavRenderer extends Renderer implements RendererInterface
+class Bootstrap5NavbarNavRenderer extends AbstractBootstrap5Renderer
 {
     public function __construct(
+        TranslatorInterface $translator,
         private readonly MatcherInterface $matcher,
-        private readonly TranslatorInterface $translator,
         private readonly Bootstrap5DropdownMenuRenderer $dropdownMenuRenderer,
         private readonly array $defaultOptions = [],
         ?string $charset = null,
     ) {
-        parent::__construct($charset);
+        parent::__construct($translator, $charset);
     }
 
     /**
@@ -36,18 +33,18 @@ class Bootstrap5NavbarNavRenderer extends Renderer implements RendererInterface
             $attributes['class'] = implode(' ', $classes);
         }
 
-        $html = '<ul' . $this->renderHtmlAttributes($attributes) . '>';
+        $html = $this->renderOpeningTag('ul', $attributes, $item->getLevel());
         foreach ($item->getChildren() as $child) {
             $html .= $this->renderItem($child, $options);
         }
-        $html .= '</ul>';
+        $html .= $this->renderClosingTag('ul', $item->getLevel());
 
         return $html;
     }
 
     private function renderItem(ItemInterface $item, array $options = []): string
     {
-        if (true === $item->getExtra(ItemExtra::DROPDOWN)) {
+        if ($item->hasChildren()) {
             return $this->renderDropdown($item, $options);
         }
 
@@ -69,15 +66,15 @@ class Bootstrap5NavbarNavRenderer extends Renderer implements RendererInterface
         $toggleAttributes['aria-haspopup'] = 'true';
         $toggleAttributes['aria-expanded'] = 'false';
 
-        $html = '<li' . $this->renderHtmlAttributes($attributes) . '>';
-        $html .= '<a' . $this->renderHtmlAttributes($toggleAttributes) . '>';
-        if (null !== ($icon = $item->getExtra(ItemExtra::ICON))) {
-            $html .= '<span ' . $this->renderHtmlAttribute('class', $icon) . '></span>';
-        }
-        $html .= $this->getLabel($item);
-        $html .= '</a>';
+        $html = $this->renderOpeningTag('li', $attributes, $item->getLevel());
+        $html .= $this->renderOpeningTag('a', $toggleAttributes, $item->getLevel() + 1);
+        $this->addIconBeforeIfDefined($item, $html);
+        $html .= $this->renderFullTag('span', [], $this->getLabel($item), $item->getLevel() + 2);
+        $this->addIconAfterIfDefined($item, $html);
+        $html .= $this->renderClosingTag('a', $item->getLevel() + 1);
+
         $html .= $this->dropdownMenuRenderer->render($item);
-        $html .= '</li>';
+        $html .= $this->renderClosingTag('li', $item->getLevel());
 
         return $html;
     }
@@ -89,37 +86,31 @@ class Bootstrap5NavbarNavRenderer extends Renderer implements RendererInterface
         $attributes = $item->getAttributes();
         $attributes['class'] = implode(' ', $classes);
 
-        $linkClasses = ['nav-link'];
-        if ($this->matcher->isCurrent($item)) {
-            $linkClasses[] = 'active';
-        }
-
         $linkAttributes = $item->getLinkAttributes();
         if (null !== $uri = $item->getUri()) {
             $linkAttributes['href'] = $this->escape($uri);
         }
-        $linkAttributes['class'] = implode(' ', $linkClasses);
 
-        $label = $this->getLabel($item);
-
-        $html = '<li' . $this->renderHtmlAttributes($attributes) . '>';
-        $html .= '<a' . $this->renderHtmlAttributes($linkAttributes) . '>';
-        $html .= $label;
-        $html .= '</a>';
-        $html .= '</li>';
-
-        return $html;
-    }
-
-    private function getLabel(ItemInterface $item): string
-    {
-        $translationDomain = $item->getExtra('translation_domain');
-        if (false === $translationDomain) {
-            $label = $item->getLabel();
-        } else {
-            $label = $this->translator->trans($item->getLabel(), [], $translationDomain);
+        $linkClasses = 'nav-link';
+        if ($this->matcher->isCurrent($item)) {
+            $linkClasses .= ' active';
+        }
+        if (array_key_exists('class', $linkAttributes)) {
+            $linkClasses .= ' ' . $linkAttributes['class'];
         }
 
-        return $this->escape($label);
+        $linkAttributes['class'] = $linkClasses;
+
+        $html = $this->renderOpeningTag('li', $attributes, $item->getLevel());
+        $html .= $this->renderOpeningTag('a', $linkAttributes, $item->getLevel() + 1);
+
+        $this->addIconBeforeIfDefined($item, $html);
+        $html .= $this->renderFullTag('span', [], $this->getLabel($item), $item->getLevel() + 2);
+        $this->addIconAfterIfDefined($item, $html);
+
+        $html .= $this->renderClosingTag('a', $item->getLevel() + 1);
+        $html .= $this->renderClosingTag('li', $item->getLevel());
+
+        return $html;
     }
 }

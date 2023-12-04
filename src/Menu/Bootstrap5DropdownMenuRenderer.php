@@ -4,15 +4,13 @@ namespace Dontdrinkandroot\BootstrapBundle\Menu;
 
 use Dontdrinkandroot\BootstrapBundle\Model\ItemExtra;
 use Knp\Menu\ItemInterface;
-use Knp\Menu\Renderer\Renderer;
-use Knp\Menu\Renderer\RendererInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
-class Bootstrap5DropdownMenuRenderer extends Renderer implements RendererInterface
+class Bootstrap5DropdownMenuRenderer extends AbstractBootstrap5Renderer
 {
-    public function __construct(private readonly TranslatorInterface $translator, ?string $charset = null)
+    public function __construct(TranslatorInterface $translator, ?string $charset = null)
     {
-        parent::__construct($charset);
+        parent::__construct($translator, $charset);
     }
 
     /**
@@ -20,14 +18,13 @@ class Bootstrap5DropdownMenuRenderer extends Renderer implements RendererInterfa
      */
     public function render(ItemInterface $item, array $options = []): string
     {
-        $html = '';
         $dropdownMenuAttributes = [];
         $dropdownMenuClasses = ['dropdown-menu'];
         if ((null !== $align = $item->getExtra(ItemExtra::ALIGN_END)) && true === $align) {
             $dropdownMenuClasses[] = 'dropdown-menu-end';
         }
         $dropdownMenuAttributes['class'] = implode(' ', $dropdownMenuClasses);
-        $html .= '<div' . $this->renderHtmlAttributes($dropdownMenuAttributes) . '>';
+        $html = $this->renderOpeningTag('ul', $dropdownMenuAttributes, $item->getLevel());
         foreach ($item->getChildren() as $child) {
             if (true === $child->getExtra(ItemExtra::DROPDOWN_HEADER)) {
                 $html .= $this->renderHeaderItem($child, $options);
@@ -37,13 +34,15 @@ class Bootstrap5DropdownMenuRenderer extends Renderer implements RendererInterfa
                 $html .= $this->renderDropdownItem($child, $options);
             }
         }
-        $html .= '</div>';
+        $html .= $this->renderClosingTag('ul', $item->getLevel());
 
         return $html;
     }
 
     private function renderDropdownItem(ItemInterface $item, array $options = []): string
     {
+        $html = $this->renderOpeningTag('li', [], $item->getLevel());
+
         $cssClasses = 'dropdown-item';
 
         $attributes = $item->getAttributes();
@@ -62,16 +61,13 @@ class Bootstrap5DropdownMenuRenderer extends Renderer implements RendererInterfa
             $linkAttributes['href'] = $this->escape($uri);
         }
 
-        $label = $this->getLabel($item);
+        $html .= $this->renderOpeningTag('a', $linkAttributes, $item->getLevel() + 1);
+        $this->addIconBeforeIfDefined($item, $html);
+        $html .= $this->renderFullTag('span', [], $this->getLabel($item), $item->getLevel() + 2);
+        $this->addIconAfterIfDefined($item, $html);
+        $html .= $this->renderClosingTag('a', $item->getLevel() + 1);
 
-        $html = '';
-
-        $html .= '<a' . $this->renderHtmlAttributes($linkAttributes) . '>';
-        if (null !== ($icon = $item->getExtra(ItemExtra::ICON))) {
-            $html .= '<span ' . $this->renderHtmlAttribute('class', $icon) . '></span>';
-        }
-        $html .= $label;
-        $html .= '</a>';
+        $html .= $this->renderClosingTag('li', $item->getLevel());
 
         return $html;
     }
@@ -81,31 +77,19 @@ class Bootstrap5DropdownMenuRenderer extends Renderer implements RendererInterfa
         $classes = ['dropdown-header'];
         $attributes = ['class' => implode(' ', $classes)];
 
-        $label = $this->getLabel($item);
-
-        $html = '';
-
-        $html .= '<h6' . $this->renderHtmlAttributes($attributes) . '>';
-        $html .= $label;
-        $html .= '</h6>';
+        $html = $this->renderOpeningTag('li', [], $item->getLevel());
+        $html .= $this->renderFullTag('h6', $attributes, $this->getLabel($item), $item->getLevel() + 1);
+        $html .= $this->renderClosingTag('li', $item->getLevel());
 
         return $html;
     }
 
-    private function getLabel(ItemInterface $item): string
+    private function renderDivider(ItemInterface $item, array $options): string
     {
-        $translationDomain = $item->getExtra(ItemExtra::TRANSLATION_DOMAIN);
-        if (false === $translationDomain) {
-            $label = $item->getLabel();
-        } else {
-            $label = $this->translator->trans($item->getLabel(), [], $translationDomain);
-        }
+        $html = $this->renderOpeningTag('li', [], $item->getLevel());
+        $html .= $this->renderFullTag('hr', ['class' => 'dropdown-divider'], '', $item->getLevel() + 1);
+        $html .= $this->renderClosingTag('li', $item->getLevel());
 
-        return $this->escape($label);
-    }
-
-    private function renderDivider(ItemInterface $child, array $options): string
-    {
-        return '<div class="dropdown-divider"></div>';
+        return $html;
     }
 }

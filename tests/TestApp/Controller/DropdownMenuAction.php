@@ -7,7 +7,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Twig\Environment;
 
-class NavbarNavAction extends AbstractController
+class DropdownMenuAction extends AbstractController
 {
     public function __invoke(Request $request): Response
     {
@@ -15,7 +15,7 @@ class NavbarNavAction extends AbstractController
         $twig = $this->container->get('twig');
         return new Response(
             $twig->createTemplate(
-                "{{ knp_menu_render('ddr.bootstrap.test.navbar_nav', {}, 'ddr_bootstrap5_navbar_nav') }}"
+                "{{ knp_menu_render('ddr.bootstrap.test.dropdown', {}, 'ddr_bootstrap5_dropdown_menu') }}"
             )->render()
         );
     }
