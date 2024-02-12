@@ -27,3 +27,15 @@
         </div>
     </div>
 {%- endblock flex_date_widget %}
+
+{% block datalist_widget %}
+    {% set attr = attr|merge({class: (attr.class|default('') ~ ' form-control')|trim}) %}
+    <input list="{{ id }}_list"
+           {{ block('widget_attributes') }} {% if value is not empty %}value="{{ value }}"{% endif %}
+           class="form-control">
+    <datalist id="{{ id }}_list">
+        {% for choice in choices %}
+            <option value="{{ choice }}"></option>
+        {% endfor %}
+    </datalist>
+{% endblock %}
