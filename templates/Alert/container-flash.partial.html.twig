@@ -16,7 +16,7 @@
     {% for message in messages %}
         <div class="alert {{ alertType }} {{ additionalClasses }} rounded-0">
             <div class="container">
-                {{ message }}
+                {{ message|trans }}
             </div>
         </div>
     {% endfor %}
