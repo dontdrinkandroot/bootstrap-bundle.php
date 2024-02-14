@@ -7,13 +7,13 @@
             {% if previous is defined %}
                 <li class="page-item">
                     <a class="page-link" rel="prev" href="{{ path(route, query|merge({(pageParameterName): previous})) }}" title="{{ 'label_previous'|trans({}, 'KnpPaginatorBundle') }}">
-                        <span class="fa fa-angle-left"></span>
+                        <span class="bi bi-caret-left"></span>
                     </a>
                 </li>
             {% else %}
                 <li class="page-item disabled">
                     <span class="page-link" title="{{ 'label_previous'|trans({}, 'KnpPaginatorBundle') }}">
-                        <span class="fa fa-angle-left"></span>
+                        <span class="bi bi-caret-left"></span>
                     </span>
                 </li>
             {% endif %}
@@ -66,13 +66,13 @@
             {% if next is defined %}
                 <li class="page-item">
                     <a class="page-link" rel="next" href="{{ path(route, query|merge({(pageParameterName): next})) }}" title="{{ 'label_next'|trans({}, 'KnpPaginatorBundle') }}">
-                        <span class="fa fa-angle-right"></span>
+                        <span class="bi bi-caret-right"></span>
                     </a>
                 </li>
             {% else %}
                 <li  class="page-item disabled">
                     <span class="page-link" title="{{ 'label_next'|trans({}, 'KnpPaginatorBundle') }}">
-                        <span class="fa fa-angle-right"></span>
+                        <span class="bi bi-caret-right"></span>
                     </span>
                 </li>
             {% endif %}

@@ -34,7 +34,7 @@ class NavbarNavActionTest extends WebTestCase
     <li class="nav-item">
         <a class="nav-link text-danger" href="/alerts">
             <span>Link with Icon After</span>
-            <span class="fa fa-plus"></span>
+            <span class="bi bi-plus"></span>
         </a>
     </li>
     <li class="nav-item dropdown">

@@ -4,6 +4,7 @@ namespace Dontdrinkandroot\BootstrapBundle\Menu;
 
 use Knp\Menu\ItemInterface;
 use Knp\Menu\Matcher\MatcherInterface;
+use Override;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 class Bootstrap5NavbarNavRenderer extends AbstractBootstrap5Renderer
@@ -18,9 +19,7 @@ class Bootstrap5NavbarNavRenderer extends AbstractBootstrap5Renderer
         parent::__construct($translator, $charset);
     }
 
-    /**
-     * {@inheritdoc}
-     */
+    #[Override]
     public function render(ItemInterface $item, array $options = []): string
     {
         $classes = ['navbar-nav'];

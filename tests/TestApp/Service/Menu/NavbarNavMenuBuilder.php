@@ -27,7 +27,7 @@ class NavbarNavMenuBuilder
 
         $menu->addChild('item.link.after', ['label' => 'Link with Icon After', ItemOption::ROUTE => 'test_app.alerts'])
             ->setLinkAttribute('class', 'text-danger')
-            ->setExtra(ItemExtra::ICON_AFTER, 'fa fa-plus');
+            ->setExtra(ItemExtra::ICON_AFTER, 'bi bi-plus');
 
         $dropdown = $menu->addChild('item.dropdown', ['label' => 'Dropdown']);
         $dropdown->addChild('item.dropdown.item1', ['label' => 'Item 1', ItemOption::ROUTE => 'test_app.alerts']);

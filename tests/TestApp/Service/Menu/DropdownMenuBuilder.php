@@ -29,7 +29,7 @@ class DropdownMenuBuilder
             ->setExtra(ItemExtra::DROPDOWN_DIVIDER, true);
 
         $root->addChild('link.icon.after', ['label' => 'Link with Icon After', 'route' => 'test_app.alerts'])
-            ->setExtra(ItemExtra::ICON_AFTER, 'fa fa-plus')
+            ->setExtra(ItemExtra::ICON_AFTER, 'bi bi-plus')
             ->setLinkAttribute('class', 'text-danger');
 
         return $root;

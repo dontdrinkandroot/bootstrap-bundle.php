@@ -35,7 +35,7 @@ class DropdownMenuActionTest extends WebTestCase
     <li>
         <a class="dropdown-item text-danger" href="/alerts">
             <span>Link with Icon After</span>
-            <span class="fa fa-plus"></span>
+            <span class="bi bi-plus"></span>
         </a>
     </li>
 </ul>

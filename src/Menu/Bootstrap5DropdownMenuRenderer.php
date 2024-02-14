@@ -4,6 +4,7 @@ namespace Dontdrinkandroot\BootstrapBundle\Menu;
 
 use Dontdrinkandroot\BootstrapBundle\Model\ItemExtra;
 use Knp\Menu\ItemInterface;
+use Override;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 class Bootstrap5DropdownMenuRenderer extends AbstractBootstrap5Renderer
@@ -13,9 +14,7 @@ class Bootstrap5DropdownMenuRenderer extends AbstractBootstrap5Renderer
         parent::__construct($translator, $charset);
     }
 
-    /**
-     * {@inheritdoc}
-     */
+    #[Override]
     public function render(ItemInterface $item, array $options = []): string
     {
         $dropdownMenuAttributes = [];
