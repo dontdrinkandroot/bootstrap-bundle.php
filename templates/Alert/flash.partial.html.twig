@@ -8,6 +8,10 @@
             {% set alertType = 'alert-success' %}
         {% elseif type == 'error' %}
             {% set alertType = 'alert-danger' %}
+        {% elseif type == 'warn' %}
+            {% set alertType = 'alert-warning' %}
+        {% elseif type == 'warning' %}
+            {% set alertType = 'alert-warning' %}
         {% else %}
             {% set alertType = 'alert-info' %}
         {% endif %}
