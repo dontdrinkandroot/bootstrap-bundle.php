@@ -6,42 +6,30 @@ use Dontdrinkandroot\BootstrapBundle\Tests\TestApp\Model\RoutePath;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\HttpFoundation\Request;
 
-class NavbarNavActionTest extends WebTestCase
+class ButtonGroupActionTest extends WebTestCase
 {
     public function testHtml(): void
     {
         $client = self::createClient();
-        $crawler = $client->request(Request::METHOD_GET, RoutePath::NAVBAR_NAV);
+        $crawler = $client->request(Request::METHOD_GET, RoutePath::BUTTON_GROUP);
         self::assertResponseStatusCodeSame(200);
 
         $expectedHtml = <<<HTML
-<ul class="navbar-nav me-auto additional-class-1 additional-class-2">
-    <li class="nav-item">
-        <a class="nav-link">
-            <span>Text</span>
-        </a>
-    </li>
-    <li class="nav-item">
-        <a href="/alerts" class="nav-link">
-            <span>Link</span>
-        </a>
-    </li>
-    <li class="nav-item">
-        <a href="/alerts" class="nav-link">
-            <span class="bi bi-bell"></span>
-            <span>Link with Icon</span>
-        </a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link text-danger" href="/alerts">
-            <span>Link with Icon After</span>
-            <span class="bi bi-plus"></span>
-        </a>
-    </li>
-    <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            <span>Dropdown</span>
-        </a>
+<div class="btn-group" role="group" aria-label="root">
+    <a type="button" href="/alerts" class="btn">
+        <span>Button</span>
+    </a>
+    <a class="btn btn-primary ddr-btn-icon-only" type="button" href="/alerts">
+        <span class="bi bi-bell"></span>
+    </a>
+    <a class="btn btn-secondary" type="button" href="/alerts">
+        <span class="bi bi-bell"></span>
+        <span>Button with Icon Before and After</span>
+        <span class="bi bi-plus"></span>
+    </a>
+    <button class="btn dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+        <span>Dropdown</span>
+    </button>
     <ul class="dropdown-menu">
         <li>
             <a class="dropdown-item" href="/alerts">
@@ -67,12 +55,9 @@ class NavbarNavActionTest extends WebTestCase
             </a>
         </li>
     </ul>
-    </li>
-</ul>
+</div>
 
 HTML;
-
         self::assertEquals($expectedHtml, $client->getResponse()->getContent());
-
     }
 }

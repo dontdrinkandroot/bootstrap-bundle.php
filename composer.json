@@ -23,7 +23,7 @@
         }
     },
     "require": {
-        "php": ">=8.2",
+        "php": ">=8.3",
         "dontdrinkandroot/common": "^0.2",
         "symfony/config": "^6.4",
         "symfony/dependency-injection": "^6.4",

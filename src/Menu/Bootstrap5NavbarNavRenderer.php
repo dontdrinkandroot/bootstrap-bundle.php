@@ -10,27 +10,23 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 class Bootstrap5NavbarNavRenderer extends AbstractBootstrap5Renderer
 {
     public function __construct(
+        MatcherInterface $matcher,
         TranslatorInterface $translator,
-        private readonly MatcherInterface $matcher,
         private readonly Bootstrap5DropdownMenuRenderer $dropdownMenuRenderer,
-        private readonly array $defaultOptions = [],
-        ?string $charset = null,
+        ?string $charset = null
     ) {
-        parent::__construct($translator, $charset);
+        parent::__construct($matcher, $translator, $charset);
     }
 
     #[Override]
     public function render(ItemInterface $item, array $options = []): string
     {
-        $classes = ['navbar-nav'];
-        if (array_key_exists('attributes', $options) && array_key_exists('classes', $options['attributes'])) {
-            $classes = array_merge($classes, $options['attributes']['classes']);
+        $classes = array_merge(['navbar-nav'], $options['attributes']['classes'] ?? []);
+        if (is_string($attributeClass = $item->getAttribute('class'))) {
+            $classes = array_merge($classes, explode(' ', $attributeClass));
         }
-
         $attributes = $item->getAttributes();
-        if (!empty($classes)) {
-            $attributes['class'] = implode(' ', $classes);
-        }
+        $attributes['class'] = implode(' ', $classes);
 
         $html = $this->renderOpeningTag('ul', $attributes, $item->getLevel());
         foreach ($item->getChildren() as $child) {
@@ -67,9 +63,7 @@ class Bootstrap5NavbarNavRenderer extends AbstractBootstrap5Renderer
 
         $html = $this->renderOpeningTag('li', $attributes, $item->getLevel());
         $html .= $this->renderOpeningTag('a', $toggleAttributes, $item->getLevel() + 1);
-        $this->addIconBeforeIfDefined($item, $html);
-        $html .= $this->renderFullTag('span', [], $this->getLabel($item), $item->getLevel() + 2);
-        $this->addIconAfterIfDefined($item, $html);
+        $html .= $this->renderItemLabelWithIcons($item, $item->getLevel() + 2);
         $html .= $this->renderClosingTag('a', $item->getLevel() + 1);
 
         $html .= $this->dropdownMenuRenderer->render($item);
@@ -102,11 +96,7 @@ class Bootstrap5NavbarNavRenderer extends AbstractBootstrap5Renderer
 
         $html = $this->renderOpeningTag('li', $attributes, $item->getLevel());
         $html .= $this->renderOpeningTag('a', $linkAttributes, $item->getLevel() + 1);
-
-        $this->addIconBeforeIfDefined($item, $html);
-        $html .= $this->renderFullTag('span', [], $this->getLabel($item), $item->getLevel() + 2);
-        $this->addIconAfterIfDefined($item, $html);
-
+        $html .= $this->renderItemLabelWithIcons($item, $item->getLevel() + 2);
         $html .= $this->renderClosingTag('a', $item->getLevel() + 1);
         $html .= $this->renderClosingTag('li', $item->getLevel());
 

@@ -4,14 +4,15 @@ namespace Dontdrinkandroot\BootstrapBundle\Menu;
 
 use Dontdrinkandroot\BootstrapBundle\Model\ItemExtra;
 use Knp\Menu\ItemInterface;
+use Knp\Menu\Matcher\MatcherInterface;
 use Override;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 class Bootstrap5DropdownMenuRenderer extends AbstractBootstrap5Renderer
 {
-    public function __construct(TranslatorInterface $translator, ?string $charset = null)
+    public function __construct(MatcherInterface $matcher, TranslatorInterface $translator, ?string $charset = null)
     {
-        parent::__construct($translator, $charset);
+        parent::__construct($matcher, $translator, $charset);
     }
 
     #[Override]
@@ -61,9 +62,7 @@ class Bootstrap5DropdownMenuRenderer extends AbstractBootstrap5Renderer
         }
 
         $html .= $this->renderOpeningTag('a', $linkAttributes, $item->getLevel() + 1);
-        $this->addIconBeforeIfDefined($item, $html);
-        $html .= $this->renderFullTag('span', [], $this->getLabel($item), $item->getLevel() + 2);
-        $this->addIconAfterIfDefined($item, $html);
+        $html .= $this->renderItemLabelWithIcons($item, $item->getLevel() + 2);
         $html .= $this->renderClosingTag('a', $item->getLevel() + 1);
 
         $html .= $this->renderClosingTag('li', $item->getLevel());

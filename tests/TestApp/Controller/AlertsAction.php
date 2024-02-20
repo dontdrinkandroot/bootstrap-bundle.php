@@ -2,12 +2,16 @@
 
 namespace Dontdrinkandroot\BootstrapBundle\Tests\TestApp\Controller;
 
+use Dontdrinkandroot\BootstrapBundle\Tests\TestApp\Model\RouteName;
+use Dontdrinkandroot\BootstrapBundle\Tests\TestApp\Model\RoutePath;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\Session;
+use Symfony\Component\Routing\Attribute\Route;
 use Twig\Environment;
 
-class AlertAction extends AbstractController
+#[Route(path: RoutePath::ALERTS, name: RouteName::ALERTS)]
+class AlertsAction extends AbstractController
 {
     public function __invoke(Session $session): Response
     {

@@ -2,9 +2,7 @@
 
 namespace Dontdrinkandroot\BootstrapBundle\Tests\TestApp\Config;
 
-use Dontdrinkandroot\BootstrapBundle\Tests\TestApp\Service\Menu\DropdownMenuBuilder;
-use Dontdrinkandroot\BootstrapBundle\Tests\TestApp\Service\Menu\NavbarNavMenuBuilder;
-use Knp\Menu\ItemInterface;
+use Dontdrinkandroot\BootstrapBundle\Tests\TestApp\Service\Menu\MenuBuilder;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
 
 use function Symfony\Component\DependencyInjection\Loader\Configurator\service;
@@ -19,25 +17,17 @@ return function (ContainerConfigurator $configurator): void {
     $services->load('Dontdrinkandroot\BootstrapBundle\Tests\TestApp\Controller\\', '../Controller')
         ->tag('controller.service_arguments');
 
-    $services->set(NavbarNavMenuBuilder::class)
+    $services->set(MenuBuilder::class)
         ->args([
             service('knp_menu.factory')
-        ]);
-
-    $navBarNavId = 'ddr.bootstrap.test.navbar_nav';
-    $services->set($navBarNavId)
-        ->class(ItemInterface::class)
-        ->factory([service(NavbarNavMenuBuilder::class), 'createMenu'])
-        ->tag('knp_menu.menu', ['alias' => $navBarNavId]);
-
-    $services->set(DropdownMenuBuilder::class)
-        ->args([
-            service('knp_menu.factory')
-        ]);
-
-    $dropdownMenuId = 'ddr.bootstrap.test.dropdown';
-    $services->set($dropdownMenuId)
-        ->class(ItemInterface::class)
-        ->factory([service(DropdownMenuBuilder::class), 'createMenu'])
-        ->tag('knp_menu.menu', ['alias' => $dropdownMenuId]);
+        ])
+        ->tag('knp_menu.menu_builder', ['method' => 'createDropdownMenu', 'alias' => 'ddr.bootstrap.test.dropdown'])
+        ->tag('knp_menu.menu_builder', ['method' => 'createNavMenu', 'alias' => 'ddr.bootstrap.test.nav'])
+        ->tag('knp_menu.menu_builder', ['method' => 'createNavbarNavMenu', 'alias' => 'ddr.bootstrap.test.navbar_nav'])
+        ->tag('knp_menu.menu_builder', ['method' => 'createNavbarMenu', 'alias' => 'ddr.bootstrap.test.navbar'])
+        ->tag(
+            'knp_menu.menu_builder',
+            ['method' => 'createButtonGroupMenu', 'alias' => 'ddr.bootstrap.test.button_group']
+        );
 };
+

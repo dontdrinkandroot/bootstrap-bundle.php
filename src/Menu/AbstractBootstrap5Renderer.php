@@ -3,7 +3,9 @@
 namespace Dontdrinkandroot\BootstrapBundle\Menu;
 
 use Dontdrinkandroot\BootstrapBundle\Model\ItemExtra;
+use Dontdrinkandroot\Common\StringUtils;
 use Knp\Menu\ItemInterface;
+use Knp\Menu\Matcher\MatcherInterface;
 use Knp\Menu\Renderer\Renderer;
 use Knp\Menu\Renderer\RendererInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
@@ -13,6 +15,7 @@ use function str_repeat;
 abstract class AbstractBootstrap5Renderer extends Renderer implements RendererInterface
 {
     public function __construct(
+        protected readonly MatcherInterface $matcher,
         protected readonly TranslatorInterface $translator,
         ?string $charset = null,
     ) {
@@ -22,6 +25,9 @@ abstract class AbstractBootstrap5Renderer extends Renderer implements RendererIn
     protected function getLabel(ItemInterface $item): string
     {
         $label = $item->getLabel();
+        if ('' === $label) {
+            return '';
+        }
         $label = (false === ($translationDomain = $item->getExtra(ItemExtra::TRANSLATION_DOMAIN))
             ? $label
             : $this->translator->trans($label, [], $translationDomain));
@@ -40,7 +46,7 @@ abstract class AbstractBootstrap5Renderer extends Renderer implements RendererIn
         );
     }
 
-    protected function renderClosingTag(string $tag, int $level): string
+    protected function renderClosingTag(string $tag, ?int $level = null): string
     {
         return sprintf(
             '%s</%s>%s',
@@ -96,20 +102,66 @@ abstract class AbstractBootstrap5Renderer extends Renderer implements RendererIn
             : str_repeat(' ', $level * 4);
     }
 
-    protected function addIconBeforeIfDefined(ItemInterface $item, string &$html): void
+    protected function addIconBeforeIfDefined(ItemInterface $item, string &$html, int $level): void
     {
         if (
             null !== ($icon = $item->getExtra(ItemExtra::ICON))
             || null !== ($icon = $item->getExtra(ItemExtra::ICON_BEFORE))
         ) {
-            $html .= $this->renderFullTag('span', ['class' => $icon], '', $item->getLevel() + 2);
+            $html .= $this->renderFullTag('span', ['class' => $icon], '', $level);
         }
     }
 
-    protected function addIconAfterIfDefined(ItemInterface $item, string &$html): void
+    protected function addIconAfterIfDefined(ItemInterface $item, string &$html, int $level): void
     {
         if (null !== ($icon = $item->getExtra(ItemExtra::ICON_AFTER))) {
-            $html .= $this->renderFullTag('span', ['class' => $icon], '', $item->getLevel() + 2);
+            $html .= $this->renderFullTag('span', ['class' => $icon], '', $level);
         }
+    }
+
+    protected function renderItemLabelWithIcons(ItemInterface $item, int $level): string
+    {
+        $html = '';
+        $this->addIconBeforeIfDefined($item, $html, $level);
+        $label = $this->getLabel($item);
+        if (!StringUtils::isEmpty($label)) {
+            $html .= $this->renderFullTag('span', [], $label, $level);
+        }
+        $this->addIconAfterIfDefined($item, $html, $level);
+
+        return $html;
+    }
+
+    /**
+     * @return string[]
+     */
+    protected function explodeClassString(?string $class): array
+    {
+        if (null === $class) {
+            return [];
+        }
+
+        return array_filter(explode(' ', $class));
+    }
+
+    /**
+     * @param string[] $classes
+     */
+    protected function implodeClasses(array $classes): string
+    {
+        return implode(' ', array_unique($classes));
+    }
+
+    /**
+     * @param string[]|string|bool|null $left
+     * @param string[]|string|bool|null $right
+     * @return string
+     */
+    protected function mergeClassesToString(array|string|bool|null $left, array|string|bool|null $right): string
+    {
+        $leftExploded = is_bool($left) ? [] : (is_array($left) ? $left : $this->explodeClassString($left));
+        $rightExploded = is_bool($right) ? [] : (is_array($right) ? $right : $this->explodeClassString($right));
+
+        return $this->implodeClasses(array_merge($leftExploded, $rightExploded));
     }
 }

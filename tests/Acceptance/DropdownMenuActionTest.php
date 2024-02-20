@@ -2,6 +2,7 @@
 
 namespace Acceptance;
 
+use Dontdrinkandroot\BootstrapBundle\Tests\TestApp\Model\RoutePath;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -10,7 +11,7 @@ class DropdownMenuActionTest extends WebTestCase
     public function testHtml(): void
     {
         $client = self::createClient();
-        $crawler = $client->request(Request::METHOD_GET, '/dropdown-menu');
+        $crawler = $client->request(Request::METHOD_GET, RoutePath::DROPDOWN_MENU);
         self::assertResponseStatusCodeSame(200);
 
         $expectedHtml = <<<HTML

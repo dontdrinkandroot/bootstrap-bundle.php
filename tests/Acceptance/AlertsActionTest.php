@@ -2,16 +2,17 @@
 
 namespace Dontdrinkandroot\BootstrapBundle\Tests\Acceptance;
 
+use Dontdrinkandroot\BootstrapBundle\Tests\TestApp\Model\RoutePath;
 use Dontdrinkandroot\Common\Asserted;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\HttpFoundation\Request;
 
-class AlertActionTest extends WebTestCase
+class AlertsActionTest extends WebTestCase
 {
     public function testAlertsRendered(): void
     {
         $client = self::createClient();
-        $crawler = $client->request(Request::METHOD_GET, '/alerts');
+        $crawler = $client->request(Request::METHOD_GET, RoutePath::ALERTS);
         self::assertResponseStatusCodeSame(200);
 
         $html = $crawler->html();

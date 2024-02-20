@@ -10,8 +10,8 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Twig\Environment;
 
-#[Route(path: RoutePath::NAVBAR_NAV, name: RouteName::NAVBAR_NAV)]
-class NavbarNavAction extends AbstractController
+#[Route(path: RoutePath::BUTTON_GROUP, name: RouteName::BUTTON_GROUP)]
+class ButtonGroupAction extends AbstractController
 {
     public function __invoke(Request $request): Response
     {
@@ -19,7 +19,7 @@ class NavbarNavAction extends AbstractController
         $twig = $this->container->get('twig');
         return new Response(
             $twig->createTemplate(
-                "{{ knp_menu_render('ddr.bootstrap.test.navbar_nav', {'attributes':{'classes': ['me-auto']}}, 'ddr_bootstrap5_navbar_nav') }}"
+                "{{ knp_menu_render('ddr.bootstrap.test.button_group', {}, 'ddr_bootstrap5_button_group') }}"
             )->render()
         );
     }
