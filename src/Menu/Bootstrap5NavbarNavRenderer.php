@@ -48,20 +48,19 @@ class Bootstrap5NavbarNavRenderer extends AbstractBootstrap5Renderer
 
     private function renderDropdown(ItemInterface $item, array $options = []): string
     {
-        $classes = ['nav-item', 'dropdown'];
-        $toggleClasses = ['nav-link', 'dropdown-toggle'];
-
-        $attributes = $item->getAttributes();
-        $attributes['class'] = implode(' ', $classes);
+        $item->setAttribute(
+            'class',
+            $this->mergeClassesToString(['nav-item', 'dropdown'], $item->getAttribute('class'))
+        );
 
         $toggleAttributes = $item->getLinkAttributes();
-        $toggleAttributes['class'] = implode(' ', $toggleClasses);
+        $toggleAttributes['class'] = $this->implodeClasses(['nav-link', 'dropdown-toggle']);
         $toggleAttributes['href'] = '#';
         $toggleAttributes['data-bs-toggle'] = 'dropdown';
         $toggleAttributes['aria-haspopup'] = 'true';
         $toggleAttributes['aria-expanded'] = 'false';
 
-        $html = $this->renderOpeningTag('li', $attributes, $item->getLevel());
+        $html = $this->renderOpeningTag('li', $item->getAttributes(), $item->getLevel());
         $html .= $this->renderOpeningTag('a', $toggleAttributes, $item->getLevel() + 1);
         $html .= $this->renderItemLabelWithIcons($item, $item->getLevel() + 2);
         $html .= $this->renderClosingTag('a', $item->getLevel() + 1);
@@ -74,28 +73,30 @@ class Bootstrap5NavbarNavRenderer extends AbstractBootstrap5Renderer
 
     private function renderLinkItem(ItemInterface $item, array $options = []): string
     {
-        $classes = ['nav-item'];
+        $item->setAttribute(
+            'class',
+            $this->mergeClassesToString(
+                'nav-item',
+                $item->getAttribute('class')
+            )
+        );
 
-        $attributes = $item->getAttributes();
-        $attributes['class'] = implode(' ', $classes);
-
-        $linkAttributes = $item->getLinkAttributes();
         if (null !== $uri = $item->getUri()) {
-            $linkAttributes['href'] = $this->escape($uri);
+            $item->setLinkAttribute('href', $this->escape($uri));
         }
 
-        $linkClasses = 'nav-link';
+        $additionalLinkClasses = ['nav-link'];
         if ($this->matcher->isCurrent($item)) {
-            $linkClasses .= ' active';
-        }
-        if (array_key_exists('class', $linkAttributes)) {
-            $linkClasses .= ' ' . $linkAttributes['class'];
+            $additionalLinkClasses[] = 'active';
         }
 
-        $linkAttributes['class'] = $linkClasses;
+        $item->setLinkAttribute(
+            'class',
+            $this->mergeClassesToString($additionalLinkClasses, $item->getLinkAttribute('class'))
+        );
 
-        $html = $this->renderOpeningTag('li', $attributes, $item->getLevel());
-        $html .= $this->renderOpeningTag('a', $linkAttributes, $item->getLevel() + 1);
+        $html = $this->renderOpeningTag('li', $item->getAttributes(), $item->getLevel());
+        $html .= $this->renderOpeningTag('a', $item->getLinkAttributes(), $item->getLevel() + 1);
         $html .= $this->renderItemLabelWithIcons($item, $item->getLevel() + 2);
         $html .= $this->renderClosingTag('a', $item->getLevel() + 1);
         $html .= $this->renderClosingTag('li', $item->getLevel());

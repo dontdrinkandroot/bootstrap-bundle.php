@@ -6,7 +6,7 @@ use Dontdrinkandroot\BootstrapBundle\Tests\TestApp\Model\RoutePath;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\HttpFoundation\Request;
 
-class ButtonGroupActionTest extends WebTestCase
+class ButtonListActionTest extends WebTestCase
 {
     public function testHtml(): void
     {
@@ -15,7 +15,7 @@ class ButtonGroupActionTest extends WebTestCase
         self::assertResponseStatusCodeSame(200);
 
         $expectedHtml = <<<HTML
-<div class="btn-group" role="group" aria-label="root">
+<div>
     <a type="button" href="/alerts" class="btn">
         <span>Button</span>
     </a>

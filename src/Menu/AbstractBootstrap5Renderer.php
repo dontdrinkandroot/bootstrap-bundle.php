@@ -135,9 +135,9 @@ abstract class AbstractBootstrap5Renderer extends Renderer implements RendererIn
     /**
      * @return string[]
      */
-    protected function explodeClassString(?string $class): array
+    protected function explodeClassString(bool|string|null $class): array
     {
-        if (null === $class) {
+        if (null === $class || is_bool($class)) {
             return [];
         }
 
@@ -163,5 +163,15 @@ abstract class AbstractBootstrap5Renderer extends Renderer implements RendererIn
         $rightExploded = is_bool($right) ? [] : (is_array($right) ? $right : $this->explodeClassString($right));
 
         return $this->implodeClasses(array_merge($leftExploded, $rightExploded));
+    }
+
+    protected function translateTitleIfSet(ItemInterface $item): void
+    {
+        if (
+            is_string($title = $item->getAttribute('title'))
+            && is_string($translationDomain = $item->getExtra(ItemExtra::TRANSLATION_DOMAIN))
+        ) {
+            $item->setAttribute('title', $this->translator->trans($title, [], $translationDomain));
+        }
     }
 }

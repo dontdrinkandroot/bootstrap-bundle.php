@@ -2,12 +2,13 @@
 
 namespace Dontdrinkandroot\BootstrapBundle\Menu;
 
+use Dontdrinkandroot\BootstrapBundle\Model\ItemExtra;
 use Knp\Menu\ItemInterface;
 use Knp\Menu\Matcher\MatcherInterface;
 use Override;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
-class Bootstrap5ButtonGroupRenderer extends AbstractBootstrap5Renderer
+class Bootstrap5ButtonListRenderer extends AbstractBootstrap5Renderer
 {
     public function __construct(
         MatcherInterface $matcher,
@@ -21,11 +22,8 @@ class Bootstrap5ButtonGroupRenderer extends AbstractBootstrap5Renderer
     #[Override]
     public function render(ItemInterface $item, array $options = []): string
     {
-        $buttonGroupAttributes = [
-            'class' => 'btn-group',
-            'role' => 'group',
-            'aria-label' => $this->getLabel($item),
-        ];
+        $buttonGroupAttributes = $item->getAttributes();
+
         $html = $this->renderOpeningTag('div', $buttonGroupAttributes, $item->getLevel());
         foreach ($item->getChildren() as $child) {
             $html .= $this->renderButton($child, $options);
@@ -38,26 +36,28 @@ class Bootstrap5ButtonGroupRenderer extends AbstractBootstrap5Renderer
     private function renderButton(ItemInterface $item, array $options): string
     {
         if ($item->hasChildren()) {
-            $attributes = $item->getAttributes();
-            $attributes['class'] = $this->mergeClassesToString(['btn', 'dropdown-toggle'],
-                $attributes['class'] ?? null);
-            $attributes['data-bs-toggle'] = 'dropdown';
-            $attributes['aria-expanded'] = 'false';
+            $item->setAttribute(
+                'class',
+                $this->mergeClassesToString(['btn', 'dropdown-toggle', 'ddr-no-caret'], $item->getAttribute('class'))
+            );
+            $item->setAttribute('data-bs-toggle', 'dropdown');
+            $item->setAttribute('aria-expanded', 'false');
+            $this->translateTitleIfSet($item);
 
-            $html = $this->renderOpeningTag('button', $attributes, $item->getLevel());
+            $html = $this->renderOpeningTag('button', $item->getAttributes(), $item->getLevel());
             $html .= $this->renderItemLabelWithIcons($item, $item->getLevel() + 1);
             $html .= $this->renderClosingTag('button', $item->getLevel());
 
             $html .= $this->dropdownMenuRenderer->render($item, $options);
         } else {
-            $attributes = $item->getAttributes();
-            $attributes['type'] = 'button';
+            $item->setAttribute('type', 'button');
             if (null !== $uri = $item->getUri()) {
-                $attributes['href'] = $this->escape($uri);
+                $item->setAttribute('href', $this->escape($uri));
             }
-            $attributes['class'] = $this->mergeClassesToString(['btn'], $attributes['class'] ?? null);
+            $item->setAttribute('class', $this->mergeClassesToString(['btn'], $item->getAttribute('class')));
+            $this->translateTitleIfSet($item);
 
-            $html = $this->renderOpeningTag('a', $attributes, $item->getLevel());
+            $html = $this->renderOpeningTag('a', $item->getAttributes(), $item->getLevel());
             $html .= $this->renderItemLabelWithIcons($item, $item->getLevel() + 1);
             $html .= $this->renderClosingTag('a', $item->getLevel());
         }
