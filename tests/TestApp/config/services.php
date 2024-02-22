@@ -27,7 +27,7 @@ return function (ContainerConfigurator $configurator): void {
         ->tag('knp_menu.menu_builder', ['method' => 'createNavbarMenu', 'alias' => 'ddr.bootstrap.test.navbar'])
         ->tag(
             'knp_menu.menu_builder',
-            ['method' => 'createButtonGroupMenu', 'alias' => 'ddr.bootstrap.test.button_group']
+            ['method' => 'createButtonGroupMenu', 'alias' => 'ddr.bootstrap.test.button_list']
         );
 };
 

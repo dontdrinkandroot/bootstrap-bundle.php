@@ -1,6 +1,6 @@
 <?php
 
-namespace Acceptance;
+namespace Dontdrinkandroot\BootstrapBundle\Tests\Acceptance;
 
 use Dontdrinkandroot\BootstrapBundle\Tests\TestApp\Model\RoutePath;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;

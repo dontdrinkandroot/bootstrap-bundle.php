@@ -2,7 +2,6 @@
 
 namespace Dontdrinkandroot\BootstrapBundle\Menu;
 
-use Dontdrinkandroot\BootstrapBundle\Model\ItemExtra;
 use Knp\Menu\ItemInterface;
 use Knp\Menu\Matcher\MatcherInterface;
 use Override;
@@ -38,7 +37,7 @@ class Bootstrap5ButtonListRenderer extends AbstractBootstrap5Renderer
         if ($item->hasChildren()) {
             $item->setAttribute(
                 'class',
-                $this->mergeClassesToString(['btn', 'dropdown-toggle', 'ddr-no-caret'], $item->getAttribute('class'))
+                $this->mergeClassesToString(['btn', 'dropdown-toggle'], $item->getAttribute('class'))
             );
             $item->setAttribute('data-bs-toggle', 'dropdown');
             $item->setAttribute('aria-expanded', 'false');

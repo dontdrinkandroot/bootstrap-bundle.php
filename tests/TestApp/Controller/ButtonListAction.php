@@ -11,7 +11,7 @@ use Symfony\Component\Routing\Attribute\Route;
 use Twig\Environment;
 
 #[Route(path: RoutePath::BUTTON_GROUP, name: RouteName::BUTTON_GROUP)]
-class ButtonGroupAction extends AbstractController
+class ButtonListAction extends AbstractController
 {
     public function __invoke(Request $request): Response
     {
@@ -19,7 +19,7 @@ class ButtonGroupAction extends AbstractController
         $twig = $this->container->get('twig');
         return new Response(
             $twig->createTemplate(
-                "{{ knp_menu_render('ddr.bootstrap.test.button_group', {}, 'ddr_bootstrap5_button_group') }}"
+                "{{ knp_menu_render('ddr.bootstrap.test.button_list', {}, 'ddr_bootstrap5_button_list') }}"
             )->render()
         );
     }
