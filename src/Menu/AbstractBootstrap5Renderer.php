@@ -164,14 +164,4 @@ abstract class AbstractBootstrap5Renderer extends Renderer implements RendererIn
 
         return $this->implodeClasses(array_merge($leftExploded, $rightExploded));
     }
-
-    protected function translateTitleIfSet(ItemInterface $item): void
-    {
-        if (
-            is_string($title = $item->getAttribute('title'))
-            && is_string($translationDomain = $item->getExtra(ItemExtra::TRANSLATION_DOMAIN))
-        ) {
-            $item->setAttribute('title', $this->translator->trans($title, [], $translationDomain));
-        }
-    }
 }

@@ -2,6 +2,7 @@
 
 namespace Dontdrinkandroot\BootstrapBundle\Menu;
 
+use Dontdrinkandroot\BootstrapBundle\Model\ItemExtra;
 use Knp\Menu\ItemInterface;
 use Knp\Menu\Matcher\MatcherInterface;
 use Override;
@@ -41,7 +42,11 @@ class Bootstrap5ButtonListRenderer extends AbstractBootstrap5Renderer
             );
             $item->setAttribute('data-bs-toggle', 'dropdown');
             $item->setAttribute('aria-expanded', 'false');
-            $this->translateTitleIfSet($item);
+
+            if (true === $item->getExtra(ItemExtra::LABEL_AS_TITLE_ONLY)) {
+                $item->setAttribute('title', $this->getLabel($item));
+                $item->setLabel('');
+            }
 
             $html = $this->renderOpeningTag('button', $item->getAttributes(), $item->getLevel());
             $html .= $this->renderItemLabelWithIcons($item, $item->getLevel() + 1);
@@ -54,7 +59,11 @@ class Bootstrap5ButtonListRenderer extends AbstractBootstrap5Renderer
                 $item->setAttribute('href', $this->escape($uri));
             }
             $item->setAttribute('class', $this->mergeClassesToString(['btn'], $item->getAttribute('class')));
-            $this->translateTitleIfSet($item);
+
+            if (true === $item->getExtra(ItemExtra::LABEL_AS_TITLE_ONLY)) {
+                $item->setAttribute('title', $this->getLabel($item));
+                $item->setLabel('');
+            }
 
             $html = $this->renderOpeningTag('a', $item->getAttributes(), $item->getLevel());
             $html .= $this->renderItemLabelWithIcons($item, $item->getLevel() + 1);
