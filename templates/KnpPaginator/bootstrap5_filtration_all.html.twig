@@ -1,11 +1,3 @@
-{#
-/**
- * @file
- * Bootstrap v5 Filter control implementation.
- *
- * View that can be used with the filter module
- */
-#}
 <form method="get" action="{{ action }}" enctype="application/x-www-form-urlencoded">
 
     {% set fieldKeys = [] %}
@@ -18,6 +10,9 @@
         <input class="form-control" type="search" value="{{ selectedValue }}" name="{{ filterValueName }}"
                placeholder="{{ 'filter_searchword'|trans({}, 'KnpPaginatorBundle') }}"/>
 {#        <input type="hidden" name="{{ filterFieldName }}" value="{{ fieldKeys }}"/>#}
-        <button class="btn btn-primary">{{ options.button }}</button>
+        <button class="btn btn-primary">
+{#            <sapn class="bi bi-fw bi-funnel me-2"></sapn>#}
+            {{ options.button }}
+        </button>
     </div>
 </form>
