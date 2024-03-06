@@ -17,21 +17,26 @@
         <div class="row">
             <div class="col">
                 {{- form_widget(form.year) -}}
+                {{- form_errors(form.year) -}}
             </div>
             <div class="col">
                 {{- form_widget(form.month) -}}
+                {{- form_errors(form.month) -}}
             </div>
             <div class="col">
                 {{- form_widget(form.day) -}}
+                {{- form_errors(form.day) -}}
             </div>
         </div>
+        {{- block('form_help') -}}
+        {{- block('form_errors') -}}
     </div>
 {%- endblock flex_date_widget %}
 
 {% block datalist_widget %}
     {% set attr = attr|merge({class: (attr.class|default('') ~ ' form-control')|trim}) %}
     <input list="{{ id }}_list"
-           {{ block('widget_attributes') }} {% if value is not empty %}value="{{ value }}"{% endif %}
+            {{ block('widget_attributes') }} {% if value is not empty %}value="{{ value }}"{% endif %}
            class="form-control">
     <datalist id="{{ id }}_list">
         {% for choice in choices %}
