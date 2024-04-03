@@ -4,6 +4,7 @@ namespace Dontdrinkandroot\BootstrapBundle\Pagination;
 
 use Countable;
 use Dontdrinkandroot\Common\Asserted;
+use Override;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Twig\Extension\AbstractExtension;
@@ -17,9 +18,7 @@ class CountablePaginationExtension extends AbstractExtension
     ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
+    #[Override]
     public function getFunctions(): array
     {
         return [
@@ -36,8 +35,18 @@ class CountablePaginationExtension extends AbstractExtension
         ];
     }
 
-    public function generatePagination(Countable $countable, int $page, int $perPage): string
+    /**
+     * @param array{prev_html?: string, next_html?: string, window_size?: int} $options
+     */
+    public function generatePagination(Countable $countable, int $page, int $perPage, array $options = []): string
     {
+        $defaultOptions = [
+            'prev_html' => '&lsaquo;',
+            'next_html' => '&rsaquo;',
+            'window_size' => 2
+        ];
+        $actualOptions = array_merge($defaultOptions, $options);
+
         $request = Asserted::notNull($this->requestStack->getCurrentRequest());
         $route = $request->attributes->get('_route');
 
@@ -49,15 +58,14 @@ class CountablePaginationExtension extends AbstractExtension
         $html = '<ul class="pagination">' . PHP_EOL;
 
         /* Render prev page */
-        $cssClasses = [];
+        $cssClasses = ['page-item'];
         if ($page === 1) {
             $cssClasses[] = 'disabled';
         }
-        $cssClasses[] = 'page-item';
-        $html .= $this->renderLink($page - 1, '&laquo;', $route, $params, $cssClasses, 'prev');
+        $html .= $this->renderLink($page - 1, $actualOptions['prev_html'], $route, $params, $cssClasses, 'prev');
 
-        $surroundingStartIdx = max(1, $page - 2);
-        $surroundingEndIdx = min($totalPages, $page + 2);
+        $surroundingStartIdx = max(1, $page - $actualOptions['window_size']);
+        $surroundingEndIdx = min($totalPages, $page + $actualOptions['window_size']);
 
         /* Render first page */
         if ($surroundingStartIdx > 1) {
@@ -92,11 +100,11 @@ class CountablePaginationExtension extends AbstractExtension
         }
 
         /* Render next page */
-        $cssClasses = [];
+        $cssClasses = ['page-item'];
         if ($page >= $totalPages) {
             $cssClasses[] = 'disabled';
         }
-        $html .= $this->renderLink($page + 1, '&raquo;', $route, $params, $cssClasses, 'next');
+        $html .= $this->renderLink($page + 1, $actualOptions['next_html'], $route, $params, $cssClasses, 'next');
 
         $html .= '</ul>' . PHP_EOL;
 
