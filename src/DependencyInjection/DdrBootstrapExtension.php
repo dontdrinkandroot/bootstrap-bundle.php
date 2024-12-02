@@ -4,6 +4,7 @@ namespace Dontdrinkandroot\BootstrapBundle\DependencyInjection;
 
 use Dontdrinkandroot\Common\Asserted;
 use Knp\Bundle\MenuBundle\KnpMenuBundle;
+use Override;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Loader\PhpFileLoader;
@@ -11,9 +12,7 @@ use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 
 class DdrBootstrapExtension extends Extension
 {
-    /**
-     * {@inheritdoc}
-     */
+    #[Override]
     public function load(array $configs, ContainerBuilder $container): void
     {
         $configuration = new Configuration();
