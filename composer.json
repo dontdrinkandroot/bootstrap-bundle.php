@@ -34,6 +34,7 @@
     },
     "require-dev": {
         "doctrine/orm": "^2.10",
+        "dontdrinkandroot/symfony-version-enforcer": "^0.1",
         "knplabs/knp-menu-bundle": "^3.3",
         "knplabs/knp-paginator-bundle": "^5.9",
         "phpunit/phpunit": "^9.6",
@@ -57,6 +58,10 @@
         }
     },
     "config": {
-        "sort-packages": true
+        "sort-packages": true,
+        "allow-plugins": {
+            "dontdrinkandroot/symfony-version-enforcer": true,
+            "phpstan/extension-installer": true
+        }
     }
 }
