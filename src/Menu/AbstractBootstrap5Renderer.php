@@ -35,6 +35,9 @@ abstract class AbstractBootstrap5Renderer extends Renderer implements RendererIn
         return $this->escape($label);
     }
 
+    /**
+     * @param array<string,mixed> $attributes
+     */
     protected function renderOpeningTag(string $tag, array $attributes, ?int $level = null): string
     {
         return sprintf(
@@ -56,6 +59,9 @@ abstract class AbstractBootstrap5Renderer extends Renderer implements RendererIn
         );
     }
 
+    /**
+     * @param array<string,mixed> $attributes
+     */
     protected function renderFullTag(string $tag, array $attributes, string $content, ?int $level = null): string
     {
         $selfClosingTags = [
@@ -74,7 +80,7 @@ abstract class AbstractBootstrap5Renderer extends Renderer implements RendererIn
             'track',
             'wbr'
         ];
-        if (in_array($tag, $selfClosingTags)) {
+        if (in_array($tag, $selfClosingTags, true)) {
             return sprintf(
                 '%s<%s%s />%s',
                 $this->indent($level),
@@ -141,7 +147,7 @@ abstract class AbstractBootstrap5Renderer extends Renderer implements RendererIn
             return [];
         }
 
-        return array_filter(explode(' ', $class));
+        return array_filter(explode(' ', $class), fn(string $class): bool => StringUtils::isNotEmpty($class));
     }
 
     /**

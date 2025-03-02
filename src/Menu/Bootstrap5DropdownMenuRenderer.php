@@ -39,6 +39,9 @@ class Bootstrap5DropdownMenuRenderer extends AbstractBootstrap5Renderer
         return $html;
     }
 
+    /**
+     * @param array<string,mixed> $options
+     */
     private function renderDropdownItem(ItemInterface $item, array $options = []): string
     {
         $html = $this->renderOpeningTag('li', [], $item->getLevel());
@@ -70,6 +73,9 @@ class Bootstrap5DropdownMenuRenderer extends AbstractBootstrap5Renderer
         return $html;
     }
 
+    /**
+     * @param array<string,mixed> $options
+     */
     private function renderHeaderItem(ItemInterface $item, array $options = []): string
     {
         $classes = ['dropdown-header'];
@@ -82,6 +88,9 @@ class Bootstrap5DropdownMenuRenderer extends AbstractBootstrap5Renderer
         return $html;
     }
 
+    /**
+     * @param array<string,mixed> $options
+     */
     private function renderDivider(ItemInterface $item, array $options): string
     {
         $html = $this->renderOpeningTag('li', [], $item->getLevel());

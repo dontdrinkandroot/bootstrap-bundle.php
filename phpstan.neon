@@ -3,6 +3,4 @@ parameters:
     paths:
         - src
         - tests
-    excludePaths:
-        - src/DependencyInjection/Configuration.php
     checkMissingOverrideMethodAttribute: true

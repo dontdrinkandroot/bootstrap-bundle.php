@@ -33,6 +33,9 @@ class Bootstrap5ButtonListRenderer extends AbstractBootstrap5Renderer
         return $html;
     }
 
+    /**
+     * @param array<string,mixed> $options
+     */
     private function renderButton(ItemInterface $item, array $options): string
     {
         if ($item->hasChildren()) {

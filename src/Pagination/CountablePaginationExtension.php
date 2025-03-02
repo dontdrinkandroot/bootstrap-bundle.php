@@ -111,17 +111,21 @@ class CountablePaginationExtension extends AbstractExtension
         return $html;
     }
 
+    /**
+     * @param array<string,mixed> $params
+     * @param string[] $cssClasses
+     */
     public function renderLink(
         int $page,
         string $text,
         string $route,
         array $params,
         array $cssClasses = [],
-        string $rel = null
+        ?string $rel = null
     ): string {
         $params['page'] = $page;
         $path = '#';
-        if (!in_array('disabled', $cssClasses)) {
+        if (!in_array('disabled', $cssClasses, true)) {
             $path = $this->getPath($route, $params);
         }
 
@@ -136,6 +140,9 @@ class CountablePaginationExtension extends AbstractExtension
         return $html;
     }
 
+    /**
+     * @param array<string,mixed> $parameters
+     */
     public function getPath(string $name, array $parameters = [], bool $relative = false): string
     {
         return $this->generator->generate(

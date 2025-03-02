@@ -37,6 +37,9 @@ class Bootstrap5NavbarNavRenderer extends AbstractBootstrap5Renderer
         return $html;
     }
 
+    /**
+     * @param array<string,mixed> $options
+     */
     private function renderItem(ItemInterface $item, array $options = []): string
     {
         if ($item->hasChildren()) {
@@ -46,6 +49,9 @@ class Bootstrap5NavbarNavRenderer extends AbstractBootstrap5Renderer
         return $this->renderLinkItem($item, $options);
     }
 
+    /**
+     * @param array<string,mixed> $options
+     */
     private function renderDropdown(ItemInterface $item, array $options = []): string
     {
         $item->setAttribute(
@@ -71,6 +77,9 @@ class Bootstrap5NavbarNavRenderer extends AbstractBootstrap5Renderer
         return $html;
     }
 
+    /**
+     * @param array<string,mixed> $options
+     */
     private function renderLinkItem(ItemInterface $item, array $options = []): string
     {
         $item->setAttribute(
