@@ -147,7 +147,7 @@ abstract class AbstractBootstrap5Renderer extends Renderer implements RendererIn
             return [];
         }
 
-        return array_filter(explode(' ', $class), fn(string $class): bool => StringUtils::isNotEmpty($class));
+        return array_filter(explode(' ', $class), StringUtils::isNotEmpty(...));
     }
 
     /**
