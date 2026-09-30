@@ -46,7 +46,9 @@
         "symfony/css-selector": "^6.4",
         "symfony/form": "^6.4",
         "symfony/phpunit-bridge": "^6.4",
-        "symfony/yaml": "^6.4"
+        "symfony/yaml": "^6.4",
+        "pb30/phpstan-composer-analysis": "^1.1",
+        "shipmonk/composer-dependency-analyser": "^1.8"
     },
     "suggest": {
         "knplabs/knp-menu-bundle": "For menu integration",
